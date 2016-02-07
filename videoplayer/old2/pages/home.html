@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+    <title>Web Video Player for PowerPoint</title>
+    <script src="../scripts/jquery-1.8.2.js" type="text/javascript"></script>
+
+    <link href="../content/Office.css" rel="stylesheet" type="text/css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
+    
+    <!-- t-pejur -->
+    <!-- Usage of v1.1 APIs -->
+    <!--<script src="../../Scripts/Office/1.1/office.js" type="text/javascript"></script>-->
+
+<!--    <script src="../../Scripts/Office/1.0/office.js"></script>-->
+
+    <!-- To enable offline debugging using a local reference to Office.js, use:                        -->
+    <!--    <script src="../../Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>       -->
+    <!--    <script src="../../Scripts/Office/1.0/office.js" type="text/javascript"></script>          -->
+
+    <link href="../content/app.css" rel="stylesheet" type="text/css" />
+    <link href="../content/home.css" rel="stylesheet" type="text/css" />
+    <link href="../content/OfficeThemes.css" rel="stylesheet" type="text/css" />
+    <script src="../scripts/home.js" type="text/javascript"></script>    
+
+    </style>
+
+</head>
+<body>
+    <div id="player"></div>
+    <div id="settings">
+        <span style="font-size:36px;text-align:center;font-family:Gill Sans / Gill Sans MT, sans-serif;">Web Video Player</span>
+        <br><br>Enter the URL of your video from <a href="http://www.youtube.com">www.youtube.com</a>:<br><br>
+        <div id="buttoner">
+            <input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid">Set Video&nbsp&nbsp&#5125</button>
+        </div>
+        <br><br><br><br><br>
+        <br><br><br>
+        
+    </div>
+    <div id="links">
+        <a href="../pages/privacy.html">Privacy</a>&nbsp&nbsp&nbsp&nbsp<a href="../pages/help.html">Help</a>&nbsp&nbsp&nbsp&nbsp<a href="../pages/support.html">Support</a>
+    </div>
+    <img id="brand" src="../Content/brand.png">
+   <div id="cloak"></div>
+   <!--
+    <img id="play" src="../content/next.png" style="position:absolute;right:10px;top:45%; cursor:pointer">
+    <div id="bar"></div> --> 
+    <div id="iframed" class="inWAC">
+        <title>To view this video from PowerPoint Online, click to open a new YouTube window.</title>
+    </div> 
+<div id="debug" style="visibility:hidden;position:fixed;height:45%;width:45%;bottom:0px;right:0px;opacity:0.5;background-color:black;color:white">Start</div>
+ <!--   <div id="borderdiv"></div>-->
+
+
+</body>
+</html>
