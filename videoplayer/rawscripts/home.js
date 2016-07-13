@@ -140,14 +140,39 @@ Office.initialize = function (reason) {
         });
         
         if(Office.context.document.settings.get("vid")){
-            document.getElementById("videoID").value = Office.context.document.settings.get("vid");
+            //first hide the ad
+			document.getElementById("goog").style.display = "none";
+			
+			document.getElementById("videoID").value = Office.context.document.settings.get("vid");
             createVideo();
+			
         }
         else{
-            $('#cloak').fadeOut();
+            
+			$('#cloak').fadeOut();
             $('#cloak').remove();
             document.getElementById("cloak").style.visibility = 'hidden';
-            //document.body.style.visibility = 'visible';
+            
+			// show the ad
+			
+			//document.getElementById("goog").style.display = "inline";
+			/*
+			var script1 = document.createElement('script');
+			script1.async = "async";
+			script1.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+			var ins1 = document.createElement('ins');
+			ins1.style = "display:block";
+			ins1.data-ad-client="ca-pub-6300181586260439";
+			ins1.data-ad-slot="4285461505";
+			ins1.data-ad-format="auto";
+			var script2 = document.createElement('script');
+			script2.innerHTML = "(adsbygoogle = window.adsbygoogle || []).push({});"
+			document.getElementById('goog').append(script1);
+			document.getElementById('goog').append(in1);
+			document.getElementById('goog').append(script2);
+			
+			*/
+			//document.body.style.visibility = 'visible';
             //Office.context.document.settings.set("vid","2hCg3OptVCs");
            // document.getElementById("videoID").value = "2hCg3OptVCs";
             /*Office.context.document.settings.saveAsync(function (asyncResult) {
@@ -155,6 +180,8 @@ Office.initialize = function (reason) {
                 //just this time
                // createVideo(); 
             });      */     
+			
+			
         }
     });
     
