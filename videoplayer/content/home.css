@@ -25,7 +25,10 @@ ins{
 }
 
 img{
-	height:auto;width:auto
+	height:23px;
+	width:60px;
+	position:relative;
+	bottom:-5px;
 }
 
 .fullscreen{
@@ -71,8 +74,13 @@ img{
 	text-align:center
 }
 
+.providerlink{
+	vertical-align:baseline;
+}
+
 #prompt{
-	height:30px;
+	height:40px;
+	vertical-align: middle;
 }
 
 #buttoner{
@@ -149,8 +157,9 @@ textarea.setVid{text-align:center}
 	overflow:auto;
 	z-index:15;
 	*/
+	text-align:center;
 	height:30px;
-	width:200px;
+	width:100%;
 }
 
 #goog{
