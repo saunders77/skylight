@@ -134,6 +134,7 @@ textarea.setVid{text-align:center}
 }
 
 .brand{
+	/*
 	position:fixed;
 	bottom:92px;
 	right:0;
@@ -143,6 +144,7 @@ textarea.setVid{text-align:center}
 	overflow:auto;
 	z-index:15;
 	height:50px
+	*/
 }
 
 #goog{
