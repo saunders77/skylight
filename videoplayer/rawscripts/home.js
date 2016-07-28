@@ -114,10 +114,11 @@ Office.initialize = function (reason) {
     $(document).ready(function(){
         if(true){//window.top==window){
             //not in iframe
-            if(document.getElementById("links").innerHTML.indexOf("Rate") == -1){
+            /*
+			if(document.getElementById("links").innerHTML.indexOf("Rate") == -1){
                document.getElementById("links").innerHTML += "<a href='https://store.office.com/writereview.aspx?assetid=WA104221182'>Rate</a>";
             }
-            
+            */
             $('#iframed').fadeOut()
             
         }

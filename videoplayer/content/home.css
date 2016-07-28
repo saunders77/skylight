@@ -31,6 +31,10 @@ img{
 	bottom:-5px;
 }
 
+i{
+	display:inline;
+}
+
 .fullscreen{
 	visibility:visible
 }
@@ -79,12 +83,15 @@ img{
 }
 
 #prompt{
-	height:40px;
+	padding-top:10px;
+	height:45px;
 	vertical-align: middle;
 }
 
 #buttoner{
-	height:28px;border:0;padding:0
+	height:28px;
+	border:0;
+	padding:0;
 }
 
 .videoID{
@@ -121,6 +128,7 @@ textarea.videoID{
 	cursor:pointer;
 	color:#fff;
 	text-align:center;
+	display:inline;
 	padding:0;
 	-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box
 }
@@ -133,17 +141,21 @@ textarea.setVid{text-align:center}
 
 .inWAC{background:url("../content/iconbig.png") no-repeat center center;background-color:#000}
 
-#links{
+#myHelp{
 	position:fixed;
-	bottom:91px;
-	left:0;
-	padding:10px;
-	height:auto;
-	width:auto;
-	overflow:auto;
-	z-index:15;
-	font-size:11px;
-	font-family:Segoe UI
+	top:30px;
+	right:20px;
+	height:30px;
+	width:30px;
+	text-align:right;
+	vertical-align:text-top;
+}
+
+#myHelp:hover{
+	color:blue;
+}
+.ms-Icon--question:hover{
+	color:blue;
 }
 
 .brand{
