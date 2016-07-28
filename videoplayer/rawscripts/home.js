@@ -21,7 +21,8 @@ function createVideo(){
     var urlString = document.getElementById("videoID").value;
     if(urlString.indexOf("youtube.com") != -1 || urlString.indexOf("youtu.be") != -1)
     {
-          write("there's a video to create");
+          ga('send','event','videoplayer','setvideo','youtube');
+		  write("there's a video to create");
           Office.context.document.settings.set("vid",urlString);
           Office.context.document.settings.saveAsync(function (asyncResult) {
             write('Settings saved with status: ' + asyncResult.status);
@@ -53,7 +54,8 @@ function createVideo(){
           });
     }
     else if(urlString.indexOf("vimeo.com") != -1){
-          Office.context.document.settings.set("vid",urlString);
+          ga('send','event','videoplayer','setvideo','vimeo');
+		  Office.context.document.settings.set("vid",urlString);
           Office.context.document.settings.saveAsync(function (asyncResult) {
                if(true){//window.top==window){
                // not in iFrame
@@ -144,11 +146,12 @@ Office.initialize = function (reason) {
 			document.getElementById("goog").style.display = "none";
 			
 			document.getElementById("videoID").value = Office.context.document.settings.get("vid");
-            createVideo();
+            ga('send','event','videoplayer','loadplayer','existingvideo');
+			createVideo();
 			
         }
         else{
-            
+            ga('send','event','videoplayer','loadplayer','novideo');
 			$('#cloak').fadeOut();
             $('#cloak').remove();
             document.getElementById("cloak").style.visibility = 'hidden';
