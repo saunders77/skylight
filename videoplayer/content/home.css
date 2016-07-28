@@ -11,7 +11,8 @@ body{
 	-ms-box-sizing:border-box;
 	-o-box-sizing:border-box;
 	box-sizing:border-box;
-	position:absolute;z-index:1
+	/* position:absolute; */
+	z-index:1
 }
 
 ins{
@@ -68,6 +69,10 @@ img{
 	font-family:Segoe UI;
 	font-size:14px;
 	text-align:center
+}
+
+#prompt{
+	height:30px;
 }
 
 #buttoner{
@@ -140,11 +145,12 @@ textarea.setVid{text-align:center}
 	right:0;
 	padding:0;
 	height:auto;
-	width:200px;
+	
 	overflow:auto;
 	z-index:15;
-	height:50px
 	*/
+	height:30px;
+	width:200px;
 }
 
 #goog{
