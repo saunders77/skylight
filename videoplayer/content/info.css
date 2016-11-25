@@ -3,3 +3,8 @@ body{
     padding:10px;
 }
 
+a{
+	cursor:pointer;
+	color:blue;
+}
+
