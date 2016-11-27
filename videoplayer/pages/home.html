@@ -38,10 +38,10 @@
 				Paste the URL of the video from<a class="providerlink" onclick="window.open('https://www.youtube.com');"><img class="logos" title="YouTube" alt="YouTube" src="../Content/ybrand.png"></a>or <a class="providerlink" onclick="window.open('https://vimeo.com/categories');"><img class="logos" title="Vimeo" alt="Vimeo" src="../Content/vbrand.png"></a>
 			</div>
 			<span id="premiumFeatures" class="ms-font-m-plus">
-				<input type="checkbox" id="autoplay" name="autoplay">&nbsp <label for="autoplay">autoplay</label></span>
+				<input type="checkbox" id="autoplay" name="autoplay">&nbsp <label id="autoplayLabel" for="autoplay">autoplay</label></span>
 			</span>
 			<div id="buttoner">
-				<input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;"></span></button>
+				<input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
 			</div>
 		</div>
 		
@@ -49,7 +49,7 @@
         
     </div>
     <div id="myHelp">
-		<a href="../pages/help.html"><i class="ms-Icon ms-Icon--question ms-font-xxl" aria-hidden="true"></i></a>
+		<a href="../pages/help.html"><i class="ms-Icon ms-Icon--question ms-font-xxl" aria-hidden="true" style="cursor:pointer;"></i></a>
 	</div>
 	<div id="goog">
 		
@@ -72,7 +72,7 @@
     <div id="iframed" class="inWAC">
         <title>To view this video from PowerPoint Online, click to open a new YouTube window.</title>
     </div> --> 
-<div id="debug" style="visibility:hidden;position:fixed;height:45%;width:45%;bottom:0px;right:0px;opacity:0.5;background-color:black;color:white">Start</div>
+<div id="debug" style="position:fixed;height:45%;width:45%;bottom:0px;right:0px;opacity:0.5;background-color:black;color:white">Start</div>
  <!--   <div id="borderdiv"></div>-->
  <div id="errorDiv" class="errors" style="display:none;">
     <div id="innerErrorDiv" class="settings" style="position:relative;height:15px;opacity:1;background-color:rgb(30,30,30);top:40%;">
