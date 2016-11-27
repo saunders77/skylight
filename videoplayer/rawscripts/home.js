@@ -10,6 +10,58 @@ function write(myText){
     document.getElementById("debug").innerHTML = document.getElementById("debug").innerHTML + "\n" + myText;
 }
 
+// from stackoverflow
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// user license info
+var orgId;
+var liveId;
+var userId; // can become either the orgId or the liveId
+var acqusitionDate;
+var isPro = false;
+
+function loadLicenseInfo(){
+	write("loading license info");
+	try{
+		var tokenXml = atob(decodeURIComponent(getParameterByName("et")));
+		var cleanTokenXml = "";
+		var nul = String.fromCharCode(00);
+		for(var i = 0;i < tokenXml.length;i++){
+		  if(tokenXml[i] != nul){
+			cleanTokenXml += tokenXml[i];
+		  }
+		}
+		var $t = $($.parseXML(cleanTokenXml)).find("t");
+		orgId = $t.attr("oid");
+		liveId = $t.attr("cid");
+		userId = orgId;
+		
+		if(liveId){
+			userId = liveId;
+		}
+		acquisitionDate = $t.attr("ad");
+		
+		ga('set', 'userId', userId);
+	} catch(err){
+		write("Error licensing: " + err.message);
+		ga6("send","event","stockconnector","licensing",err.message,1);
+	}
+	
+	// these literal assignments are for testing
+	liveId = "4D73096B12099722";
+	//liveId = "4D73096B12099720";
+	userId = liveId;
+
+}
+
 function errorMessage(myText){
      document.getElementById("innerErrorDiv").innerHTML = myText;
      var theErrorDiv = document.getElementById("errorDiv");
@@ -112,7 +164,8 @@ function saveVid(){
 
 Office.initialize = function (reason) {
     $(document).ready(function(){
-        if(true){//window.top==window){
+		
+		if(true){//window.top==window){
             //not in iframe
             /*
 			if(document.getElementById("links").innerHTML.indexOf("Rate") == -1){
@@ -153,9 +206,18 @@ Office.initialize = function (reason) {
         }
         else{
             ga('send','event','videoplayer','loadplayer','novideo');
+			
+			loadLicenseInfo();
+			
+			//displayProAd
+			if(userId && Office.context.commerceAllowed){
+				$("#premiumFeatures").show();
+			}
+			
+			
 			$('#cloak').fadeOut();
             $('#cloak').remove();
-            document.getElementById("cloak").style.visibility = 'hidden';
+            document.getElementById("cloak").style.visibility = 'hidden'; 
             
 			// show the ad
 			
