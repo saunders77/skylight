@@ -52,12 +52,12 @@ function loadLicenseInfo(){
 		ga('set', 'userId', userId);
 	} catch(err){
 		write("Error licensing: " + err.message);
-		ga6("send","event","stockconnector","licensing",err.message,1);
+		ga("send","event","videoplayer","licensing",err.message);
 	}
 	
 	// these literal assignments are for testing
-	liveId = "4D73096B12099722";
-	//liveId = "4D73096B12099720";
+	//liveId = "4D73096B12099722";
+	liveId = "4D73096B12099720";
 	userId = liveId;
 
 }
@@ -205,20 +205,106 @@ Office.initialize = function (reason) {
 			
         }
         else{
-            ga('send','event','videoplayer','loadplayer','novideo');
+            
+			// checks for the userId of paid users
+			function checkFirebase(customerId,callback){
+				write("checking firebase");
+				$.getScript("https://www.gstatic.com/firebasejs/3.2.1/firebase.js", function(response, status){
+					// code directly from Firebase
+					var config = {
+						apiKey: "AIzaSyAmbxHuUjquac2ltM5hFoHqSIFe9bLN9u0",
+						authDomain: "web-video-firebase.firebaseapp.com",
+						databaseURL: "https://web-video-firebase.firebaseio.com",
+						storageBucket: "web-video-firebase.appspot.com",
+						// not sure why the following line is needed here but not for Stock Connector
+						messagingSenderId: "915381707394"
+					};
+					firebase.initializeApp(config);
+					
+					// my code
+					var database = firebase.database();
+					var userReference = firebase.database().ref("customers/" + customerId);
+					userReference.once('value').then(function(dataSnapshot) {
+						// handle read data.
+						if(dataSnapshot.val()){
+							callback(true);
+							ga("send","event","videoplayer","confirmedFirebase",customerId);
+						}
+						else{
+							callback(false);
+						}
+					});
+				});
+				
+			}
+			
+			function checkForPro(callback){
+				write("checking for pro");
+				// don't need to check the document
+				// uses the code names "weight" and "light"
+				
+				// check localStorage
+				if (typeof(Storage) !== "undefined" && localStorage.getItem("weight") == "light") {
+					callback(true);
+				}
+				else{
+					// third, check firebase if the user is logged in
+					if(userId){
+						checkFirebase(userId,function(paid){
+							if(paid){
+								callback(true);
+								localStorage.setItem("weight","light");
+							}
+							else{
+								callback(false);
+							}
+						});
+					}
+					else{
+						callback(false);
+					}					
+				}
+				
+			}
+			
+			ga('send','event','videoplayer','loadplayer','novideo');
 			
 			loadLicenseInfo();
 			
 			//displayProAd
+			write("should I display the ad? " + (userId && Office.context.commerceAllowed));
+			
 			if(userId && Office.context.commerceAllowed){
 				$("#premiumFeatures").show();
 			}
 			
-			
 			$('#cloak').fadeOut();
             $('#cloak').remove();
-            document.getElementById("cloak").style.visibility = 'hidden'; 
+            //document.getElementById("cloak").style.visibility = 'hidden';
             
+			$("#videoID").focus();
+			
+			
+			$("#autoplay").change(function(){
+				if(this.checked){
+					$("#loadingGif").show();
+					checkForPro(function(result){
+						if(result){
+							// the user is pro
+							$("#loadingGif").hide();
+						}
+						else{
+							write("I'm not pro");
+						}
+					});
+				}
+				else{
+					// the user just turned off autoplay
+					Office.context.document.settings.set("weight","light");
+					Office.context.document.settings.saveAsync();
+				}
+			});
+			
 			// show the ad
 			
 			//document.getElementById("goog").style.display = "inline";
