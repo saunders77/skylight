@@ -16,6 +16,7 @@
         ga('send', 'pageview');
       
     </script>
+	
     <script src="../scripts/jquery-1.8.2.js" type="text/javascript"></script>
     
     <link href="../content/Office.css" rel="stylesheet" type="text/css" />
@@ -37,23 +38,15 @@
 			<div id="prompt" class="ms-font-m-plus">
 				Paste the URL of the video from<a class="providerlink" onclick="window.open('https://www.youtube.com');"><img class="logos" title="YouTube" alt="YouTube" src="../Content/ybrand.png"></a>or <a class="providerlink" onclick="window.open('https://vimeo.com/categories');"><img class="logos" title="Vimeo" alt="Vimeo" src="../Content/vbrand.png"></a>
 			</div>
-			<span id="premiumFeatures" class="ms-font-m-plus">
-				<input type="checkbox" id="autoplay" name="autoplay">&nbsp <label id="autoplayLabel" for="autoplay">autoplay</label>&nbsp <img id="loadingGif" src="../Content/enabling.gif">
-			</span>
 			<div id="buttoner">
 				<input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
 			</div>
-			<div>
-				testing...
-				<script data-selz-t="_selz-btn-default" data-selz-a="modal" data-selz-checkout="true" data-selz-cb="cc181e" data-selz-chbg="cc181e" data-selz-b="http://selz.co/NkuAQ-mGz" data-text="Pay now">
-					if (typeof _$elz === "undefined") { var _$elz = {}; }
-					if (typeof _$elz.b === "undefined") { 
-					_$elz.b = { e: document.createElement("script") }; 
-					_$elz.b.e.src = "https://selz.com/embed/button"; 
-					document.body.appendChild(_$elz.b.e); }
-				</script>
-				<noscript><a href="http://selz.co/NkuAQ-mGz" target="_blank">Pay now</a><a href="https://selz.com/info/sell-digital-downloads" target="_blank">Sell digital downloads</a></noscript>
-			</div>
+			<span id="premiumFeatures" class="ms-font-m-plus">
+				<input type="checkbox" disabled id="autoplay" name="autoplay">&nbsp <label disabled id="autoplayLabel" for="autoplay">Autoplay</label><br>
+				<input type="checkbox" disabled id="customstarttime" name="customstarttime">&nbsp <label disabled id="customstartLabel" for="customstarttime">Start at:</label>&nbsp<input type="text" disabled name="Time Input" id="timeinput" class="timeinputClass" value="0:00"><br>
+				<img id="loadingGif" src="../Content/enabling.gif">
+			</span>
+
 		
         <br>
         
@@ -61,21 +54,21 @@
     <div id="myHelp">
 		<a href="../pages/help.html"><i class="ms-Icon ms-Icon--question ms-font-xxl" aria-hidden="true" style="cursor:pointer;"></i></a>
 	</div>
-	<div id="goog">
-		
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- Web Video Player 2 -->
-		<ins class="adsbygoogle"
-			 style="display:block"
-			 data-ad-client="ca-pub-6300181586260439"
-			 data-ad-slot="4285461505"
-			 data-ad-format="auto"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
-	</div>
+	
     
    <div id="cloak"></div>
+   
+   
+	<div id="proPrompt">
+		<div id="proContent">
+			Thanks for using Web Video Player! Contribute <b>$5.00</b> to support the add-in and unlock <b>Autoplay</b> and <b>Custom Start Time</b> for all the videos you insert from this account, from any PowerPoint presentation.
+			<div id="buyNow">
+			    <img class="payButton" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" title="Contribute now with PayPal" /><br>
+			    <img class="payButton" id="creditCards" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" title="Contribute with PayPal or Credit Card" />
+		    </div>
+		</div>
+	</div>
+    
    <!--
     <img id="play" src="../content/next.png" style="position:absolute;right:10px;top:45%; cursor:pointer">
     <div id="bar"></div> 

@@ -56,8 +56,7 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	//liveId = "4D73096B12099722";
-	liveId = "4D73096B12099720";
+	liveId = "8888888888888888";
 	userId = liveId;
 
 }
@@ -192,8 +191,11 @@ Office.initialize = function (reason) {
             createVideo();
         });
         $('#errorDiv').click(function(){
-               $(this).fadeOut();
+        	$(this).fadeOut();
         });
+		$('#buyNow').click(function(){
+			window.open("../pages/purchasewindow.html?custom=" + userId);
+		});
         
         if(Office.context.document.settings.get("vid")){
             //first hide the ad
@@ -267,20 +269,74 @@ Office.initialize = function (reason) {
 				
 			}
 			
+			function dialogCallback(asyncResult) {
+				if (asyncResult.status == "failed") {
+
+					// In addition to general system errors, there are 3 specific errors for 
+					// displayDialogAsync that you can handle individually.
+					switch (asyncResult.error.code) {
+						case 12004:
+							write("Domain is not trusted");
+							break;
+						case 12005:
+							write("HTTPS is required");
+							break;
+						case 12007:
+							write("A dialog is already opened.");
+							break;
+						default:
+							write(asyncResult.error.message);
+							break;
+					}
+				}
+				else {
+					dialog = asyncResult.value;
+					/*Messages are sent by developers programatically from the dialog using office.context.ui.messageParent(...)*/
+					dialog.addEventHandler(Office.EventType.DialogMessageReceived, messageHandler);
+
+					/*Events are sent by the platform in response to user actions or errors. For example, the dialog is closed via the 'x' button*/
+					dialog.addEventHandler(Office.EventType.DialogEventReceived, eventHandler);
+				}
+			}
+
+			
 			ga('send','event','videoplayer','loadplayer','novideo');
 			
 			loadLicenseInfo();
-			
+
 			//displayProAd
 			write("should I display the ad? " + (userId && Office.context.commerceAllowed));
 			
+			function checkServerDatabase(callback){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						callback(this.status);
+					}
+				};
+				xhttp.open("POST", "https://michael-saunders.com/testing/checkdatabase.php", true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send("custom=7777777777777777");
+			}
+			
+			checkServerDatabase(function(myStatus){
+				if(myStatus == 200){
+					write("succeeded");
+				}
+				else{
+					write("result status: " + myStatus);
+				}
+			});
+
+			write("sent request");
+
 			if(userId && Office.context.commerceAllowed){
 				$("#premiumFeatures").show();
 			}
 			
-			$('#cloak').fadeOut();
-            $('#cloak').remove();
-            //document.getElementById("cloak").style.visibility = 'hidden';
+			//$('#cloak').fadeOut();
+            //$('#cloak').remove();
+            document.getElementById("cloak").style.visibility = 'hidden';
             
 			$("#videoID").focus();
 			
@@ -295,6 +351,7 @@ Office.initialize = function (reason) {
 						}
 						else{
 							write("I'm not pro");
+							//Office.context.ui.displayDialogAsync("https://michael-saunders.com/videoplayer/xstaging/pages/dialog.html", { height: 50, width: 10 }, dialogCallback);
 						}
 					});
 				}

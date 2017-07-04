@@ -14,8 +14,6 @@
         ga('send', 'pageview');
       
     </script>
-	
-    <script src="../scripts/jquery-1.8.2.js" type="text/javascript"></script>
 	<link href="../content/fabric.min.css" rel="stylesheet" type="text/css" />
 
 
@@ -28,6 +26,7 @@
     <form id='myForm' action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="visibility:hidden">
         <input type="hidden" name="cmd" value="_s-xclick">
         <input type="hidden" name="hosted_button_id" value="F2TJNFET5FPJ6">
+        <input type="hidden" id="custom" name="custom">
         <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
         <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
     </form>
@@ -36,6 +35,18 @@
 
 </body>
 <script>
+    // from stackoverflow
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    document.getElementById('custom').value = getParameterByName("custom");
+    alert(document.getElementById('custom').value);
     document.getElementById('myForm').submit();
 </script>
 </html>
