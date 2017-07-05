@@ -69,20 +69,32 @@ function errorMessage(myText){
 }
 
 function createVideo(){
-    var urlString = document.getElementById("videoID").value;
-	var myAutoplay = 0
+	var urlString;
+	urlString = Office.context.document.settings.get("vid");
+	var myAutoplay = 0;
 	var myStartTime = 0;
-	var timeArr = document.getElementById("timeinput").split(':');
-	if(document.getElementById("autoplay").checked){
-		myAutoplay = 1;
+	if(urlString){
+		// then we're loading from cache
+		myAutoplay = Office.context.document.settings.get("autoplay");
+		myStartTime = Office.context.document.settings.get("starttime");
 	}
-	if(document.getElementById("customstarttime").checked){
-		myStartTime = (+timeArr[timeArr.length - 1]) + ((+timeArr[timeArr.length - 2]) * 60);
-		if(timeArr.length > 2){
-			myStartTime += ((+timeArr[timeArr.length - 3]) * 60 * 60);
-		}
-	}
+	else{
+		// construct the video parameters
+		urlString = document.getElementById("videoID").value;
 
+		var timeArr = document.getElementById("timeinput").value.split(':');
+		if(document.getElementById("autoplay").checked){
+			myAutoplay = 1;
+		}
+		if(document.getElementById("customstarttime").checked){
+			myStartTime = (+timeArr[timeArr.length - 1]) + ((+timeArr[timeArr.length - 2]) * 60);
+			if(timeArr.length > 2){
+				myStartTime += ((+timeArr[timeArr.length - 3]) * 60 * 60);
+			}
+		}
+		write("setting video params");
+	}
+	
     if(urlString.indexOf("youtube.com") != -1 || urlString.indexOf("youtu.be") != -1)
     {
           ga('send','event','videoplayer','setvideo','youtube');
@@ -224,72 +236,12 @@ Office.initialize = function (reason) {
 		}
 
         if(Office.context.document.settings.get("vid")){
-			document.getElementById("videoID").value = Office.context.document.settings.get("vid");
+			//document.getElementById("videoID").value = Office.context.document.settings.get("vid");
             ga('send','event','videoplayer','loadplayer','existingvideo');
 			createVideo();
         }
-        else{
-            
-			// checks for the userId of paid users
-			function checkFirebase(customerId,callback){
-				write("checking firebase");
-				$.getScript("https://www.gstatic.com/firebasejs/3.2.1/firebase.js", function(response, status){
-					// code directly from Firebase
-					var config = {
-						apiKey: "AIzaSyAmbxHuUjquac2ltM5hFoHqSIFe9bLN9u0",
-						authDomain: "web-video-firebase.firebaseapp.com",
-						databaseURL: "https://web-video-firebase.firebaseio.com",
-						storageBucket: "web-video-firebase.appspot.com",
-						// not sure why the following line is needed here but not for Stock Connector
-						messagingSenderId: "915381707394"
-					};
-					firebase.initializeApp(config);
-					
-					// my code
-					var database = firebase.database();
-					var userReference = firebase.database().ref("customers/" + customerId);
-					userReference.once('value').then(function(dataSnapshot) {
-						// handle read data.
-						if(dataSnapshot.val()){
-							callback(true);
-							ga("send","event","videoplayer","confirmedFirebase",customerId);
-						}
-						else{
-							callback(false);
-						}
-					});
-				});
-				
-			}
+        else{			
 			
-			function checkForPro(callback){
-				write("checking for pro");
-				// don't need to check the document
-				// uses the code names "weight" and "light"
-				
-				// check localStorage
-				if (typeof(Storage) !== "undefined" && localStorage.getItem("weight") == "light") {
-					callback(true);
-				}
-				else{
-					// third, check firebase if the user is logged in
-					if(userId){
-						checkFirebase(userId,function(paid){
-							if(paid){
-								callback(true);
-								localStorage.setItem("weight","light");
-							}
-							else{
-								callback(false);
-							}
-						});
-					}
-					else{
-						callback(false);
-					}					
-				}
-				
-			}
 			
 			function dialogCallback(asyncResult) {
 				if (asyncResult.status == "failed") {

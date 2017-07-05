@@ -25,10 +25,10 @@ function onYouTubeIframeAPIReady() {
     height: '342px',
     width: '608px',
     videoId: vid,
-	playerVars: {
-		'autoplay': vautoplay,
-    'start': vstarttime
-	},
+	  playerVars: {
+		  'autoplay': vautoplay,
+      'start': vstarttime
+	  },
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
