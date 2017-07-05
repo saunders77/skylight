@@ -9,6 +9,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 //    after the API code downloads.
 var player;
 var vurl = Office.context.document.settings.get("vid");
+var vautoplay = Office.context.document.settings.get("autoplay");
+var vstarttime = Office.context.document.settings.get("starttime");
 var vindex;
 if(vurl.indexOf("watch?v=") != -1){
   vindex = vurl.indexOf("watch?v=");
@@ -24,7 +26,8 @@ function onYouTubeIframeAPIReady() {
     width: '608px',
     videoId: vid,
 	playerVars: {
-		'autoplay': 1
+		'autoplay': vautoplay,
+    'start': vstarttime
 	},
     events: {
       'onReady': onPlayerReady,

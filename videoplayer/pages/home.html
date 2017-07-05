@@ -42,8 +42,10 @@
 				<input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
 			</div>
 			<span id="premiumFeatures" class="ms-font-m-plus">
-				<input type="checkbox" disabled id="autoplay" name="autoplay">&nbsp <label disabled id="autoplayLabel" for="autoplay">Autoplay</label><br>
-				<input type="checkbox" disabled id="customstarttime" name="customstarttime">&nbsp <label disabled id="customstartLabel" for="customstarttime">Start at:</label>&nbsp<input type="text" disabled name="Time Input" id="timeinput" class="timeinputClass" value="0:00"><br>
+				<input type="checkbox" disabled id="autoplay" name="autoplay" class="startsDisabled">&nbsp <label disabled class="startsDisabled" id="autoplayLabel" for="autoplay">Autoplay</label><br>
+				<input type="checkbox" disabled class="startsDisabled" id="customstarttime" name="customstarttime">
+                &nbsp<label disabled class="startsDisabled" id="customstartLabel" for="customstarttime">Start at:</label>
+                &nbsp<input type="text" disabled class="startsDisabled" name="Time Input" id="timeinput" class="timeinputClass" value="0:00"><br>
 				<img id="loadingGif" src="../Content/enabling.gif">
 			</span>
 

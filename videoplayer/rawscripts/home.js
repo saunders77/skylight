@@ -56,7 +56,7 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	liveId = "8888888888888888";
+	liveId = "888888-88888-88888";
 	userId = liveId;
 
 }
@@ -70,11 +70,26 @@ function errorMessage(myText){
 
 function createVideo(){
     var urlString = document.getElementById("videoID").value;
+	var myAutoplay = 0
+	var myStartTime = 0;
+	var timeArr = document.getElementById("timeinput").split(':');
+	if(document.getElementById("autoplay").checked){
+		myAutoplay = 1;
+	}
+	if(document.getElementById("customstarttime").checked){
+		myStartTime = (+timeArr[timeArr.length - 1]) + ((+timeArr[timeArr.length - 2]) * 60);
+		if(timeArr.length > 2){
+			myStartTime += ((+timeArr[timeArr.length - 3]) * 60 * 60);
+		}
+	}
+
     if(urlString.indexOf("youtube.com") != -1 || urlString.indexOf("youtu.be") != -1)
     {
           ga('send','event','videoplayer','setvideo','youtube');
 		  write("there's a video to create");
-          Office.context.document.settings.set("vid",urlString);
+		  Office.context.document.settings.set("vid",urlString);
+		  Office.context.document.settings.set("autoplay", myAutoplay);
+		  Office.context.document.settings.set("starttime", myStartTime);
           Office.context.document.settings.saveAsync(function (asyncResult) {
             write('Settings saved with status: ' + asyncResult.status);
             if(true){//window.top==window){
@@ -194,17 +209,24 @@ Office.initialize = function (reason) {
         	$(this).fadeOut();
         });
 		$('#buyNow').click(function(){
-			window.open("../pages/purchasewindow.html?custom=" + userId);
+			window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
 		});
         
+		function turnOnPro(){
+			$('.startsDisabled').prop("disabled", false);
+			$('.startsDisabled').css("color", black);
+			$('#premiumFeatures').css("color", black);
+			$('#premiumFeatures').css("border-color", black);
+		}
+
+		function showAd(){
+			$('#proPrompt').fadeIn();
+		}
+
         if(Office.context.document.settings.get("vid")){
-            //first hide the ad
-			document.getElementById("goog").style.display = "none";
-			
 			document.getElementById("videoID").value = Office.context.document.settings.get("vid");
             ga('send','event','videoplayer','loadplayer','existingvideo');
 			createVideo();
-			
         }
         else{
             
@@ -314,17 +336,19 @@ Office.initialize = function (reason) {
 						callback(this.status);
 					}
 				};
-				xhttp.open("POST", "https://michael-saunders.com/testing/checkdatabase.php", true);
+				xhttp.open("POST", "https://michael-saunders.com/server/checkdatabase.php", true);
 				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send("custom=7777777777777777");
+				xhttp.send("custom=" + userId);
 			}
 			
 			checkServerDatabase(function(myStatus){
 				if(myStatus == 200){
-					write("succeeded");
+					write("result succeeded");
+					turnOnPro();
 				}
 				else{
-					write("result status: " + myStatus);
+					showAd();
+					write("result status: " + myStatus)
 				}
 			});
 

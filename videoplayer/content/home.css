@@ -32,6 +32,7 @@ ins{
 }
 
 #proPrompt{
+	display:none;
 	bottom:0px;
 	height:150px;
 	width:300px;
