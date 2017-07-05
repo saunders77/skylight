@@ -41,20 +41,20 @@
 			<div id="buttoner">
 				<input type="text" name="Video URL" id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
 			</div>
-			<span id="premiumFeatures" class="ms-font-m-plus">
+			<span id="premiumFeatures" class="ms-font-m-plus" title="Autoplay and Custom Start Time are premium features">
 				<input type="checkbox" disabled id="autoplay" name="autoplay" class="startsDisabled">&nbsp <label disabled class="startsDisabled" id="autoplayLabel" for="autoplay">Autoplay</label><br>
 				<input type="checkbox" disabled class="startsDisabled" id="customstarttime" name="customstarttime">
                 &nbsp<label disabled class="startsDisabled" id="customstartLabel" for="customstarttime">Start at:</label>
                 &nbsp<input type="text" disabled class="startsDisabled" name="Time Input" id="timeinput" class="timeinputClass" value="0:00"><br>
-				<img id="loadingGif" src="../Content/enabling.gif">
+				
 			</span>
 
 		
         <br>
         
     </div>
-    <div id="myHelp">
-		<a href="../pages/help.html"><i class="ms-Icon ms-Icon--question ms-font-xxl" aria-hidden="true" style="cursor:pointer;"></i></a>
+    <div id="myHelp" title="Help, support, feedback, and contact">
+		<a href="../pages/help.html" title="Help, support, premium features, privacy, and contact"><i class="ms-Icon ms-Icon--question ms-font-xxl" aria-hidden="true" style="cursor:pointer;" title="Help, support, feedback, and contact"></i></a>
 	</div>
 	
     
@@ -63,12 +63,15 @@
    
 	<div id="proPrompt">
 		<div id="proContent">
-			Thanks for using Web Video Player! Contribute <b>$5.00</b> to support the add-in and unlock <b>Autoplay</b> and <b>Custom Start Time</b> for all the videos you insert from this account, from any PowerPoint presentation.
-			<div id="buyNow">
-			    <img class="payButton" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" title="Contribute now with PayPal" /><br>
-			    <img class="payButton" id="creditCards" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" title="Contribute with PayPal or Credit Card" />
-		    </div>
+			Thanks for using Web Video Player! Find it handy? Contribute <b>$5.00</b> to unlock <b>Autoplay</b> and <b>Custom Start Time</b> now for all the videos you insert in any file.
 		</div>
+        <div id="buyNow">
+			<img class="payButton" id="paypalButton" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-small.png" title="Contribute now with PayPal" /><br>
+			<img class="payButton" id="creditCards" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" title="Contribute with PayPal or Credit Card" />
+		</div>
+        <div id="waitingPay">
+            <img id="loadingGif" src="../Content/enabling.gif"> Checking payment (<a id="cancelPay">cancel</a>)
+        </div>
 	</div>
     
    <!--
@@ -77,7 +80,7 @@
     <div id="iframed" class="inWAC">
         <title>To view this video from PowerPoint Online, click to open a new YouTube window.</title>
     </div> --> 
-<div id="debug" style="position:fixed;height:45%;width:45%;bottom:0px;right:0px;opacity:0.5;background-color:black;color:white">Start</div>
+<div id="debug">Start</div>
  <!--   <div id="borderdiv"></div>-->
  <div id="errorDiv" class="errors" style="display:none;">
     <div id="innerErrorDiv" class="settings" style="position:relative;height:15px;opacity:1;background-color:rgb(30,30,30);top:40%;">

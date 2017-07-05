@@ -28,6 +28,8 @@ var userId; // can become either the orgId or the liveId
 var acqusitionDate;
 var isPro = false;
 
+var pingingForPayment = false;
+
 function loadLicenseInfo(){
 	write("loading license info");
 	try{
@@ -56,8 +58,10 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	liveId = "888888-88888-88888";
+	liveId = "gorgey-our";
 	userId = liveId;
+
+	write("user ID is " + userId);
 
 }
 
@@ -134,6 +138,8 @@ function createVideo(){
     else if(urlString.indexOf("vimeo.com") != -1){
           ga('send','event','videoplayer','setvideo','vimeo');
 		  Office.context.document.settings.set("vid",urlString);
+		  Office.context.document.settings.set("autoplay", myAutoplay);
+		  Office.context.document.settings.set("starttime", myStartTime);
           Office.context.document.settings.saveAsync(function (asyncResult) {
                if(true){//window.top==window){
                // not in iFrame
@@ -143,7 +149,16 @@ function createVideo(){
                var ifrm = document.getElementById('ifrm');
                ifrm.style.height = "100%";
                write("heighta: " + ifrm.height);
-               ifrm.setAttribute("src","//player.vimeo.com/video/" + vid + "?title=0&amp;byline=0&amp;portrait=0");
+			   var queryString = "?";
+			   if(myStartTime){
+				   queryString += "&#t=" + myStartTime + "s";
+			   }
+			   if(myAutoplay){
+				   queryString += "&autoplay=1";
+			   }
+			   queryString += "&title=0&amp;byline=0&amp;portrait=0";
+			   
+               ifrm.setAttribute("src","//player.vimeo.com/video/" + vid + queryString);
                write("heighto: " + ifrm.height);
                write(ifrm.style.width);
                write("zindex: " + ifrm.style.zIndex);
@@ -220,15 +235,39 @@ Office.initialize = function (reason) {
         $('#errorDiv').click(function(){
         	$(this).fadeOut();
         });
-		$('#buyNow').click(function(){
+		$('.payButton').click(function(){
 			window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
+			pingingForPayment = true;
+			$('#waitingPay').show();
+			setTimeout(pingForPro,10000);
+			ga("send","event","videoplayer","checkping");
 		});
+		$('#cancelPay').click(function(){
+        	$('#waitingPay').hide();
+			pingingForPayment = false;
+        });
         
+		function pingForPro(){
+			checkServerDatabase(function(myStatus){
+				if(myStatus == 200){
+					write("result succeeded");
+					ga("send","event","videoplayer","purchasesucceeded");
+					pingingForPayment = false;
+					$('#proPrompt').fadeOut();
+					turnOnPro();
+				}
+				else{
+					if(pingingForPayment){
+						setTimeout(pingForPro,2000);
+						ga("send","event","videoplayer","checkping");					
+					}
+				}
+			});
+		}
+
 		function turnOnPro(){
 			$('.startsDisabled').prop("disabled", false);
-			$('.startsDisabled').css("color", black);
-			$('#premiumFeatures').css("color", black);
-			$('#premiumFeatures').css("border-color", black);
+			$('#timeinput').css("user-select", "text")
 		}
 
 		function showAd(){
@@ -277,9 +316,6 @@ Office.initialize = function (reason) {
 			ga('send','event','videoplayer','loadplayer','novideo');
 			
 			loadLicenseInfo();
-
-			//displayProAd
-			write("should I display the ad? " + (userId && Office.context.commerceAllowed));
 			
 			function checkServerDatabase(callback){
 				var xhttp = new XMLHttpRequest();
@@ -299,72 +335,17 @@ Office.initialize = function (reason) {
 					turnOnPro();
 				}
 				else{
-					showAd();
+					if(userId && Office.context.commerceAllowed){
+						showAd();
+					}
+					
 					write("result status: " + myStatus)
 				}
 			});
 
-			write("sent request");
-
-			if(userId && Office.context.commerceAllowed){
-				$("#premiumFeatures").show();
-			}
-			
-			//$('#cloak').fadeOut();
-            //$('#cloak').remove();
             document.getElementById("cloak").style.visibility = 'hidden';
             
 			$("#videoID").focus();
-			
-			
-			$("#autoplay").change(function(){
-				if(this.checked){
-					$("#loadingGif").show();
-					checkForPro(function(result){
-						if(result){
-							// the user is pro
-							$("#loadingGif").hide();
-						}
-						else{
-							write("I'm not pro");
-							//Office.context.ui.displayDialogAsync("https://michael-saunders.com/videoplayer/xstaging/pages/dialog.html", { height: 50, width: 10 }, dialogCallback);
-						}
-					});
-				}
-				else{
-					// the user just turned off autoplay
-					Office.context.document.settings.set("weight","light");
-					Office.context.document.settings.saveAsync();
-				}
-			});
-			
-			// show the ad
-			
-			//document.getElementById("goog").style.display = "inline";
-			/*
-			var script1 = document.createElement('script');
-			script1.async = "async";
-			script1.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-			var ins1 = document.createElement('ins');
-			ins1.style = "display:block";
-			ins1.data-ad-client="ca-pub-6300181586260439";
-			ins1.data-ad-slot="4285461505";
-			ins1.data-ad-format="auto";
-			var script2 = document.createElement('script');
-			script2.innerHTML = "(adsbygoogle = window.adsbygoogle || []).push({});"
-			document.getElementById('goog').append(script1);
-			document.getElementById('goog').append(in1);
-			document.getElementById('goog').append(script2);
-			
-			*/
-			//document.body.style.visibility = 'visible';
-            //Office.context.document.settings.set("vid","2hCg3OptVCs");
-           // document.getElementById("videoID").value = "2hCg3OptVCs";
-            /*Office.context.document.settings.saveAsync(function (asyncResult) {
-                write('Settings saved with status: ' + asyncResult.status);
-                //just this time
-               // createVideo(); 
-            });      */     
 			
 			
         }
