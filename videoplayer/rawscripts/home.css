@@ -1,10 +1,6 @@
 *{
 	border:0;border-style:none;padding:0;margin:0;height:100%;width:100%;overflow:hidden;
-	-webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+
 	cursor:default;
 }
 
@@ -68,7 +64,7 @@ i{
 
 #settings{
 	padding:10px;
-	font-family:Segoe UI;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	font-size:14px;
 	text-align:center;
 }
@@ -76,7 +72,7 @@ i{
 .settings{
 	padding-top:30px;
 	padding-bottom:30px;
-	font-family:Segoe UI;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	font-size:14px;
 	text-align:center
 }
@@ -149,7 +145,7 @@ i{
 	width:380px;
 	border:1px;
 	border-style:solid;
-	font-family:Segoe UI;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	font-size:14px;
 	text-align:left;
 	padding:0;
@@ -167,7 +163,7 @@ i{
 	width:54px;
 	border:1px;
 	border-style:solid;
-	font-family:Segoe UI;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	text-align:right;
 	padding:0;
 	cursor:text;
@@ -188,7 +184,7 @@ textarea.videoID{
 	height:27px;
 	width:100px;
 	font-size:14px;
-	font-family:Segoe UI;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	background-color:#cc181e;
 	border:1px;
 	border-color:#000;
@@ -206,7 +202,7 @@ textarea.setVid{text-align:center}
 
 #cloak{background-color:#fff;position:absolute;z-index:30;height:100%;width:100%;bottom:0;right:0}
 
-#iframed{background-color:#000;position:absolute;z-index:35;height:100%;width:100%;bottom:0;right:0;font-family:Segoe UI;font-size:14px;border:1px;padding:10px;border-color:#000;border-style:solid;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;visibility:hidden;cursor:pointer}
+#iframed{background-color:#000;position:absolute;z-index:35;height:100%;width:100%;bottom:0;right:0;font-family:Segoe UI,Helvetica,sans-serif;font-size:14px;border:1px;padding:10px;border-color:#000;border-style:solid;-moz-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;visibility:hidden;cursor:pointer}
 
 .inWAC{background:url("../content/iconbig.png") no-repeat center center;background-color:#000}
 
@@ -335,5 +331,5 @@ textarea.setVid{text-align:center}
 	opacity:0.5;
 	background-color:black;
 	color:white;
-	
+	display:none;
 }
