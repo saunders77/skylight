@@ -34,6 +34,7 @@ function onYouTubeIframeAPIReady() {
       'onStateChange': onPlayerStateChange
     }
   });
+  document.getElementById("cloak").style.visibility = 'hidden';
 }
 /*
 
@@ -68,6 +69,7 @@ function fillScreen(){
     ytFrame = document.getElementById("player");
     ytFrame.style.height = $(window).height();
     ytFrame.style.width = $(window).width();
+    document.getElementById("cloak").style.visibility = 'hidden';
 }
 /*
   <!--  <img id="play" src="../content/next.png" style="position:absolute;right:10px;top:45%; cursor:pointer">

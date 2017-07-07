@@ -276,12 +276,12 @@ textarea.setVid{text-align:center}
 }
 
 #proContent{
-	width:290px;
+	width:295px;
 }
 
 #buyNow{
 	position:absolute;
-	left:340px;
+	left:345px;
 	right:0px;
 	bottom:1px;
 }
@@ -306,12 +306,12 @@ textarea.setVid{text-align:center}
 #waitingPay{
 	display:none;
 	position:absolute;
-	left:500px;
+	left:505px;
 	bottom:1px;
 	padding-top:10px;
 	padding-left:22px;
 	height:50px;
-	width:200px;
+	width:240px;
 	
 }
 
@@ -331,5 +331,5 @@ textarea.setVid{text-align:center}
 	opacity:0.5;
 	background-color:black;
 	color:white;
-	display:none;
+
 }

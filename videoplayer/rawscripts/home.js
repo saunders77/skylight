@@ -58,8 +58,8 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	liveId = "gorgey-our";
-	userId = liveId;
+	//liveId = "gorgey-our";
+	//userId = liveId;
 
 	write("user ID is " + userId);
 
@@ -115,9 +115,7 @@ function createVideo(){
                  script.type = 'text/javascript';
                  script.src = "../scripts/youtube.js";
                  $('body').append( script );
-                 $('#cloak').fadeOut();
-                 $('#cloak').remove();
-                 document.getElementById("cloak").style.visibility = 'hidden';
+                 
             }
             else{
                 // window.reload("www.youtube.com/watch?v=TJLY4Cgk18U");
