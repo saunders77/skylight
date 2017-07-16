@@ -142,7 +142,7 @@ i{
 
 .videoID{
 	height:27px;
-	width:380px;
+	width:50%;
 	border:1px;
 	border-style:solid;
 	font-family:Segoe UI, Helvetica, sans-serif;
@@ -331,5 +331,5 @@ textarea.setVid{text-align:center}
 	opacity:0.5;
 	background-color:black;
 	color:white;
-
+	display:none;
 }

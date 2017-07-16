@@ -336,6 +336,10 @@ Office.initialize = function (reason) {
 					if(userId && Office.context.commerceAllowed){
 						showAd();
 					}
+					else{
+						// hide additional features options for iPad
+						$('#premiumFeatures').hide();
+					}
 					
 					write("result status: " + myStatus)
 				}
