@@ -339,6 +339,10 @@ Office.initialize = function (reason) {
 					else{
 						// hide additional features options for iPad
 						$('#premiumFeatures').hide();
+						if(!Office.context.commerceAllowed){
+							$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+						}
+						
 					}
 					
 					write("result status: " + myStatus)
