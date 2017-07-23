@@ -338,9 +338,12 @@ Office.initialize = function (reason) {
 					}
 					else{
 						// hide additional features options for iPad
-						$('#premiumFeatures').hide();
 						if(!Office.context.commerceAllowed){
+							$('#premiumFeatures').hide();
 							$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+						}
+						else{
+							document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
 						}
 						
 					}
