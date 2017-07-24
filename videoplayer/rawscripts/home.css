@@ -172,6 +172,8 @@ i{
 }
 
 #timeinput{
+	position:absolute;
+	left:144px;
 	height:20px;
 	width:54px;
 	border:1px;
@@ -187,9 +189,12 @@ i{
 	-o-box-sizing:border-box;
 	box-sizing:border-box
 	
+	
 }
 
 #endtimeinput{
+	position:absolute;
+	left:144px;
 	height:20px;
 	width:54px;
 	border:1px;

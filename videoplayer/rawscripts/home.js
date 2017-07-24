@@ -239,8 +239,14 @@ Office.initialize = function (reason) {
 
         }
         $('#setVid').click(function(){
-            write("creating video");
-            createVideo();
+            if(document.getElementById("videoID").value == "debug"){
+				errorMessage("Click <a href='mailto:webvideoplayer@outlook.com?subject=Support Request for " + userId + "&body=Please enable my account. Thank you!'>here</a> to send ID code " + userId + " for support.");
+			}
+			else{
+				write("creating video");
+            	createVideo();
+			}
+			
         });
         $('#errorDiv').click(function(){
         	$(this).fadeOut();
