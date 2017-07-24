@@ -36,10 +36,10 @@
         <span style="text-align:center" class="ms-font-su">Web Video Player</span>
         <div id="settingsContent">
 			<div id="prompt" class="ms-font-m-plus">
-				Paste the URL of the video from<a class="providerlink" onclick="window.open('https://www.youtube.com');"><img class="logos" title="YouTube" alt="YouTube" src="../Content/ybrand.png"></a>or <a class="providerlink" onclick="window.open('https://vimeo.com/categories');"><img class="logos" title="Vimeo" alt="Vimeo" src="../Content/vbrand.png"></a>
+				Paste the URL of the video from<a class="providerlink" onclick="window.open('https://www.youtube.com');"><img class="logos" title="YouTube" alt="YouTube" src="../Content/ybrand.png"></a>or <a class="providerlink" onclick="window.open('https://vimeo.com/categories');"><img class="logos" title="Vimeo" alt="Vimeo" src="../Content/vbrand.png"></a> below:
 			</div>
 			<div id="buttoner">
-				<input id="videoID" class="videoID"><button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
+				<input id="videoID" class="videoID">
 			</div>
 			<span id="premiumFeatures" class="ms-font-m-plus" title="Autoplay and Custom Start Time are premium features">
 				<input type="checkbox" disabled id="autoplay" name="autoplay" class="startsDisabled">&nbsp <label disabled class="startsDisabled" id="autoplayLabel" for="autoplay">Autoplay</label><br>
@@ -51,7 +51,9 @@
                 &nbsp<input type="text" disabled class="startsDisabled" name="Time Input" id="endtimeinput" class="timeinputClass" value=""><br>
 				
 			</span>
-
+            <p>
+                <button id="setVid" class="setVid ms-font-m-plus ms-fontColor-white">Set Video <span class="ms-Icon ms-Icon--play ms-fontColor-white" aria-hidden="true" style="display:inline;cursor:pointer;"></span></button>
+            </p>
 		
         <br>
         
