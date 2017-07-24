@@ -11,6 +11,7 @@ var player;
 var vurl = Office.context.document.settings.get("vid");
 var vautoplay = Office.context.document.settings.get("autoplay");
 var vstarttime = Office.context.document.settings.get("starttime");
+var vendtime = Office.context.document.settings.get("endtime");
 var vindex;
 if(vurl.indexOf("watch?v=") != -1){
   vindex = vurl.indexOf("watch?v=");
@@ -27,7 +28,8 @@ function onYouTubeIframeAPIReady() {
     videoId: vid,
 	  playerVars: {
 		  'autoplay': vautoplay,
-      'start': vstarttime
+      'start': vstarttime,
+      'end': vendtime
 	  },
     events: {
       'onReady': onPlayerReady,

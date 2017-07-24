@@ -120,11 +120,24 @@ i{
 	cursor:pointer;
 }
 
+#customendtime{
+
+	height:18px;
+	width:18px;
+	vertical-align:bottom;
+	margin-right:0px;
+	cursor:pointer;
+}
+
 #autoplayLabel{
 	cursor:pointer;
 }
 
 #customstartLabel{
+	cursor:pointer;
+}
+
+#customendLabel{
 	cursor:pointer;
 }
 
@@ -159,6 +172,24 @@ i{
 }
 
 #timeinput{
+	height:20px;
+	width:54px;
+	border:1px;
+	border-style:solid;
+	font-family:Segoe UI, Helvetica, sans-serif;
+	text-align:right;
+	padding:0;
+	cursor:text;
+	padding-right:4px;
+	margin-left: 0px;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box
+	
+}
+
+#endtimeinput{
 	height:20px;
 	width:54px;
 	border:1px;

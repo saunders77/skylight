@@ -77,16 +77,19 @@ function createVideo(){
 	urlString = Office.context.document.settings.get("vid");
 	var myAutoplay = 0;
 	var myStartTime = 0;
+	var myEndTime = 0;
 	if(urlString){
 		// then we're loading from cache
 		myAutoplay = Office.context.document.settings.get("autoplay");
 		myStartTime = Office.context.document.settings.get("starttime");
+		myEndTime = Office.context.document.settings.get("endtime");
 	}
 	else{
 		// construct the video parameters
 		urlString = document.getElementById("videoID").value;
 
 		var timeArr = document.getElementById("timeinput").value.split(':');
+		var endTimeArr = document.getElementById("endtimeinput").value.split(':');
 		if(document.getElementById("autoplay").checked){
 			myAutoplay = 1;
 		}
@@ -94,6 +97,12 @@ function createVideo(){
 			myStartTime = (+timeArr[timeArr.length - 1]) + ((+timeArr[timeArr.length - 2]) * 60);
 			if(timeArr.length > 2){
 				myStartTime += ((+timeArr[timeArr.length - 3]) * 60 * 60);
+			}
+		}
+		if(document.getElementById("customendtime").checked){
+			myEndTime = (+endTimeArr[endTimeArr.length - 1]) + ((+endTimeArr[endTimeArr.length - 2]) * 60);
+			if(endTimeArr.length > 2){
+				myEndTime += ((+endTimeArr[endTimeArr.length - 3]) * 60 * 60);
 			}
 		}
 		write("setting video params");
@@ -106,6 +115,7 @@ function createVideo(){
 		  Office.context.document.settings.set("vid",urlString);
 		  Office.context.document.settings.set("autoplay", myAutoplay);
 		  Office.context.document.settings.set("starttime", myStartTime);
+		  Office.context.document.settings.set("endtime", myEndTime);
           Office.context.document.settings.saveAsync(function (asyncResult) {
             write('Settings saved with status: ' + asyncResult.status);
             if(true){//window.top==window){
@@ -138,6 +148,7 @@ function createVideo(){
 		  Office.context.document.settings.set("vid",urlString);
 		  Office.context.document.settings.set("autoplay", myAutoplay);
 		  Office.context.document.settings.set("starttime", myStartTime);
+		  Office.context.document.settings.set("endtime", myEndTime);
           Office.context.document.settings.saveAsync(function (asyncResult) {
                if(true){//window.top==window){
                // not in iFrame
@@ -151,6 +162,7 @@ function createVideo(){
 			   if(myStartTime){
 				   queryString += "&#t=" + myStartTime + "s";
 			   }
+			   // vimeo doesn't support end times
 			   if(myAutoplay){
 				   queryString += "&autoplay=1";
 			   }
@@ -265,7 +277,8 @@ Office.initialize = function (reason) {
 
 		function turnOnPro(){
 			$('.startsDisabled').prop("disabled", false);
-			$('#timeinput').css("user-select", "text")
+			$('#timeinput').css("user-select", "text");
+			$('#endtimeinput').css("user-select", "text");
 		}
 
 		function showAd(){
