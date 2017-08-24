@@ -19,5 +19,5 @@
     <RequestedWidth>730</RequestedWidth>
     <RequestedHeight>411</RequestedHeight>
   </DefaultSettings>
-  <Permissions>Restricted</Permissions>
+  <Permissions>ReadDocument</Permissions>
 </OfficeApp>

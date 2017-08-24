@@ -21,6 +21,47 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function regularInfo(){
+  /*
+  write("oHeight:" + outerHeight  + "; ");
+  write("oWidth:" + outerWidth + "; ");
+  write("iHeight:" + innerHeight + "; ");
+  write("iWidth:" + innerWidth + "; ");
+  write("pageX:" + pageXOffset + "; ");
+  write("pageY:" + pageYOffset + "; ");
+  write("sHeight:" + screen.height  + "; ");
+  write("sWidth:" + screen.width + "; ");
+  write("aHeight:" + screen.availHeight + "; ");
+  write("aWidth:" + screen.availWidth + "; ");
+  
+  write("sLeft:" + screenLeft  + "; ");
+  write("sTop:" + screenTop + "; ");
+  write("sX:" + screenX + "; ");
+  write("sY:" + screenY + "; ");
+  write("<br>");
+  */
+  Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+	var error = asyncResult.error;
+	if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+		write(error.name + ": " + error.message);
+	} 
+	else {
+		// Get selected data.
+		var dataValue = asyncResult.value; 
+		write('Selected data is ' + dataValue);
+	}            
+  });
+  setTimeout(regularInfo, 2000);
+
+}
+/*
+window.onscroll = function(){write("scrolled<br>");};
+window.onselect = function(){write("selected<br>");};
+window.onresize = function(){write("resized<br>");};
+window.onpointermove = function(){write("pointermoved<br>");};
+*/
+setTimeout(regularInfo, 2000);
+
 // user license info
 var orgId;
 var liveId;
@@ -58,8 +99,8 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	//liveId = "1EF5C754CE1B2ADE";
-	//userId = liveId;
+	liveId = "1EF5C754CE1B2ADE";
+	userId = liveId;
 
 	write("user ID is " + userId);
 

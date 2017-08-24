@@ -1,3 +1,5 @@
+
+
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
@@ -48,10 +50,21 @@ document.getElementById('player').appendChild(iframe);
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-    //fillScreen();
-    if(vautoplay){
+
+  function checkActiveSlide(){
+    if(window.outerWidth == window.innerWidth){
+      // it's invisible
+      setTimeout(checkActiveSlide, 330);
+    }
+    else{
+      // it's visible. Play!
       event.target.playVideo();
     }
+  }   
+    
+  if(vautoplay){
+    checkActiveSlide();
+  }
     
   
 }

@@ -360,12 +360,12 @@ textarea.setVid{text-align:center}
 
 #debug{
 	position:fixed;
-	height:45%;
-	width:40%;
-	bottom:90px;
+	height:90%;
+	width:60%;
+	bottom:20px;
 	right:0px;
 	opacity:0.5;
 	background-color:black;
 	color:white;
-	display:none;
+	text-align: left;
 }
