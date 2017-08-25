@@ -315,20 +315,27 @@ Office.initialize = function (reason) {
 			else{
 				write("creating video");
 
-				Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
-					var error = asyncResult.error;
-					if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-						write(error.name + ": " + error.message);
-					} 
-					else {
-						// remember which slide it's on
-						var slideId = asyncResult.value["slides"][0]["id"]; 
-						Office.context.document.settings.set("slideId", slideId);
-						Office.context.document.settings.saveAsync(function (asyncResult) {});
-					}            
-				});
-
-            	createVideo();
+				try{				
+					Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+						var error = asyncResult.error;
+						write("selecteddata result is " + asyncResult.status);
+						if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+							write(error.name + ": " + error.message);
+							createVideo();
+						} 
+						else {
+							// remember which slide it's on
+							var slideId = asyncResult.value["slides"][0]["id"]; 
+							Office.context.document.settings.set("slideId", slideId);
+							Office.context.document.settings.saveAsync(function (asyncResult) {
+								createVideo();
+							});
+						}            
+					});
+				}catch(err){
+					write("error checking slide. creating video...");
+					createVideo();
+				}
 			}
 			
         });
@@ -338,9 +345,10 @@ Office.initialize = function (reason) {
 		$('#timeinput').change(function(){
         	$('#customstarttime').attr('checked', true);
         });
-		$('#endtimeinput').change(function(){
-        	$('customendtime').attr('checked', true);
-        });
+		// some weird bug preventing me from doing this with jquery
+		document.getElementById("endtimeinput").onchange = function(){
+			document.getElementById("customendtime").checked = true;
+		};
 		$('.payButton').click(function(){
 			window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
 			pingingForPayment = true;
