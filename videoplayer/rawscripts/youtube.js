@@ -18,6 +18,9 @@ var vindex;
 if(vurl.indexOf("watch?v=") != -1){
   vindex = vurl.indexOf("watch?v=");
 }
+else if(vurl.indexOf("m/embed/") != -1){
+  vindex = vurl.indexOf("m/embed/");
+}
 else{
   vindex = vurl.indexOf("outu.be/");
 }

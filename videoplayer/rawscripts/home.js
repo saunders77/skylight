@@ -335,6 +335,12 @@ Office.initialize = function (reason) {
         $('#errorDiv').click(function(){
         	$(this).fadeOut();
         });
+		$('#timeinput').change(function(){
+        	$('#customstarttime').attr('checked', true);
+        });
+		$('#endtimeinput').change(function(){
+        	$('customendtime').attr('checked', true);
+        });
 		$('.payButton').click(function(){
 			window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
 			pingingForPayment = true;
