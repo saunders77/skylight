@@ -20,9 +20,9 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
+/*
 function regularInfo(){
-  /*
+  
   write("oHeight:" + outerHeight  + "; ");
   write("oWidth:" + outerWidth + "; ");
   write("iHeight:" + innerHeight + "; ");
@@ -38,29 +38,31 @@ function regularInfo(){
   write("sTop:" + screenTop + "; ");
   write("sX:" + screenX + "; ");
   write("sY:" + screenY + "; ");
-  write("<br>");
-  */
-  Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
-	var error = asyncResult.error;
-	if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-		write(error.name + ": " + error.message);
-	} 
-	else {
-		// Get selected data.
-		var dataValue = asyncResult.value; 
-		write('Selected data is ' + JSON.stringify(dataValue));
-	}            
-  });
-  setTimeout(regularInfo, 2000);
 
-}
-/*
+  Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+				var error = asyncResult.error;
+				if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+					write(error.name + ": " + error.message);
+				} 
+				else {
+					// Get selected data.
+					var dataValue = asyncResult.value; 
+					write('Selected data is ' + JSON.stringify(dataValue));
+				}            
+			});
+  write("<br>");
+  
+  
+  setTimeout(regularInfo, 2000);
+	
+	}
+
 window.onscroll = function(){write("scrolled<br>");};
 window.onselect = function(){write("selected<br>");};
 window.onresize = function(){write("resized<br>");};
 window.onpointermove = function(){write("pointermoved<br>");};
 */
-setTimeout(regularInfo, 2000);
+//setTimeout(regularInfo, 2000);
 
 // user license info
 var orgId;
@@ -148,6 +150,32 @@ function createVideo(){
 		}
 		write("setting video params");
 	}
+
+	// start checking to reload the window when the user leaves to another slide
+	if(Office.context.document.settings.get("slideId")){
+		var playingSlideId = Office.context.document.settings.get("slideId");
+		function watchForNextSlide(){
+			Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+				var error = asyncResult.error;
+				if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+					write(error.name + ": " + error.message);
+				} 
+				else {
+					if(asyncResult.value["slides"][0]["id"] == playingSlideId){
+						// we're still playing
+						setTimeout(watchForNextSlide, 400);
+					}
+					else{
+						// the user has moved away
+						window.location.reload();
+					}
+				}            
+			});
+		}
+
+		watchForNextSlide();
+	}
+	// otherwise it's a legacy video, so just leave it to keep playing
 	
     if(urlString.indexOf("youtube.com") != -1 || urlString.indexOf("youtu.be") != -1)
     {
@@ -279,12 +307,27 @@ Office.initialize = function (reason) {
             //document.getElementById("iframed").innerHTML = "<p>YouTube does not allow video-embedding within Office Online. Please use this document with the desktop version of Office to view the video.</p>";
 
         }
+
         $('#setVid').click(function(){
             if(document.getElementById("videoID").value == "debug"){
 				errorMessage("Click <a href='mailto:webvideoplayer@outlook.com?subject=Support Request for " + userId + "&body=Please enable my account. Thank you!'>here</a> to send ID code " + userId + " for support.");
 			}
 			else{
 				write("creating video");
+
+				Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+					var error = asyncResult.error;
+					if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+						write(error.name + ": " + error.message);
+					} 
+					else {
+						// remember which slide it's on
+						var slideId = asyncResult.value["slides"][0]["id"]; 
+						Office.context.document.settings.set("slideId", slideId);
+						Office.context.document.settings.saveAsync(function (asyncResult) {});
+					}            
+				});
+
             	createVideo();
 			}
 			
@@ -333,9 +376,38 @@ Office.initialize = function (reason) {
 		}
 
         if(Office.context.document.settings.get("vid")){
-			//document.getElementById("videoID").value = Office.context.document.settings.get("vid");
             ga('send','event','videoplayer','loadplayer','existingvideo');
-			createVideo();
+
+			if(Office.context.document.settings.get("slideId")){
+				// verify that the slide is active before creating the video
+
+				var savedSlideId = Office.context.document.settings.get("slideId");
+
+				function checkActiveSlide(){
+					Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+						var error = asyncResult.error;
+						if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+							write(error.name + ": " + error.message);
+						} 
+						else {
+							if(asyncResult.value["slides"][0]["id"] == savedSlideId){
+								// we're on the correct slide
+								createVideo();
+							}
+							else{
+								// we're on a different slide
+								setTimeout(checkActiveSlide, 400);
+							}
+						}            
+					});
+				}
+
+				checkActiveSlide();
+
+			}
+			else{
+				createVideo();
+			}			
         }
         else{			
 			

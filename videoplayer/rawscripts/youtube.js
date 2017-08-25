@@ -29,6 +29,7 @@ function onYouTubeIframeAPIReady() {
     width: '608px',
     videoId: vid,
 	  playerVars: {
+      'autoplay': vautoplay,
       'start': vstarttime,
       'end': vendtime
 	  },
@@ -51,20 +52,7 @@ document.getElementById('player').appendChild(iframe);
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
 
-  function checkActiveSlide(){
-    if(window.outerWidth == window.innerWidth){
-      // it's invisible
-      setTimeout(checkActiveSlide, 330);
-    }
-    else{
-      // it's visible. Play!
-      event.target.playVideo();
-    }
-  }   
-    
-  if(vautoplay){
-    checkActiveSlide();
-  }
+  
     
   
 }
