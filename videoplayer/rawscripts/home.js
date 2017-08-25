@@ -48,7 +48,7 @@ function regularInfo(){
 	else {
 		// Get selected data.
 		var dataValue = asyncResult.value; 
-		write('Selected data is ' + dataValue);
+		write('Selected data is ' + JSON.stringify(dataValue));
 	}            
   });
   setTimeout(regularInfo, 2000);
