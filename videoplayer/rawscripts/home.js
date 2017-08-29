@@ -163,7 +163,7 @@ function createVideo(){
 				else {
 					if(asyncResult.value["slides"][0]["id"] == playingSlideId){
 						// we're still playing
-						setTimeout(watchForNextSlide, 400);
+						setTimeout(watchForNextSlide, 600);
 					}
 					else{
 						// the user has moved away
@@ -313,10 +313,10 @@ Office.initialize = function (reason) {
 				errorMessage("Click <a href='mailto:webvideoplayer@outlook.com?subject=Support Request for " + userId + "&body=Please enable my account. Thank you!'>here</a> to send ID code " + userId + " for support.");
 			}
 			else{
-				write("creating video");
-
-				try{				
-					Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+				var waitingForSlideId = true;
+				
+				Office.context.document.getSelectedDataAsync(Office.CoercionType.SlideRange,{}, function (asyncResult) {
+					if(waitingForSlideId){
 						var error = asyncResult.error;
 						write("selecteddata result is " + asyncResult.status);
 						if (asyncResult.status === Office.AsyncResultStatus.Failed) {
@@ -330,12 +330,16 @@ Office.initialize = function (reason) {
 							Office.context.document.settings.saveAsync(function (asyncResult) {
 								createVideo();
 							});
-						}            
-					});
-				}catch(err){
-					write("error checking slide. creating video...");
+						}
+					}
+					// else do nothing because we created the video without a slide ID already   
+				});
+
+				// the above call never returns if permissions doesn't allow it. So let's give it 400ms:
+				setTimeout(function(){
+					waitingForSlideId = false;
 					createVideo();
-				}
+				}, 400);			
 			}
 			
         });
@@ -410,7 +414,7 @@ Office.initialize = function (reason) {
 							}
 							else{
 								// we're on a different slide
-								setTimeout(checkActiveSlide, 400);
+								setTimeout(checkActiveSlide, 600);
 							}
 						}            
 					});
