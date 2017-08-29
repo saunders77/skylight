@@ -101,8 +101,8 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	liveId = "1EF5C754CE1B2ADE";
-	userId = liveId;
+	//liveId = "1EF5C754CE1B2ADE";
+	//userId = liveId;
 
 	write("user ID is " + userId);
 
@@ -493,7 +493,9 @@ Office.initialize = function (reason) {
 							$('#helpLink').attr("href", "../pages/helpnocommerce.html");
 						}
 						else{
+							// there's no user ID
 							document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
+							$('#premiumFeatures').hide();
 						}
 						
 					}
