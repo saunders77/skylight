@@ -101,8 +101,8 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	//liveId = "1EF5C754CE1B2ADE";
-	//userId = liveId;
+	liveId = "1EF5C754CE1B2ADf";
+	userId = liveId;
 
 	write("user ID is " + userId);
 

@@ -75,6 +75,16 @@ i{
 	cursor:pointer;
 }
 
+#links{
+	position:absolute;
+	right:5px;
+	bottom:70px;
+	background-color:yellow;
+	font-size: 12px;
+	text-align: right;
+	
+}
+
 #prompt{
 	padding-top:20px;
 	padding-bottom:0px;
