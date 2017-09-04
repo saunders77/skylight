@@ -42,24 +42,18 @@
                 <li><a href="#financial"><b>Contributing with PayPal and getting premium features</b></a></li>
             </ul>
         </p>
-        <img src="../content/sampleportfolio2.png" href="https://store.office.com/en-us/app.aspx?assetid=WA104221182">
+        <img src="../content/webvideoplayermac.png" href="https://store.office.com/en-us/app.aspx?assetid=WA104221182">
         
     <h2><a id="howto">Help and FAQ</a></h2>
         <ul>
             <li><a href="#getit">How to get Web Video Player</a></li>
  	        <li><a href="#insertvideo">How to insert a video</a></li>
-            <li><a href="#international">Connect to international stocks</a></li>
-            <li><a href="#currency">Connect to FOREX currency exchange rates</a></li>
-            <li><a href="#indexes">Connect to market indexes</a></li>
-            <li><a href="#onetomany">Connect a stock to more than one cell</a></li>
-            <li><a href="#find">Find the cell you already connected a stock to</a></li>
-            <li><a href="#changeinterval">Change the time between automatic refreshes</a></li>
-            <li><a href="#refreshnow">Refresh immediately</a></li>
-            <li><a href="#stoprefresh">Turn off automatic refreshing</a></li>
-            <li><a href="#2010">Use the Stock Connector add-in with Excel 2010</a></li>
-            <li><a href="#clean">Clean a workbook to get out of a bad or corrupted state with Stock Connector</a></li>
+            <li><a href="#urls">What kind of URL do I need to enter?</a></li>
+            <li><a href="#delete">How do I delete a video?</a></li>
+            <li><a href="#replace">How do I switch or replace one video with another or edit the URL?</a></li>
+            <li><a href="#2010">Can I use Web Video Player with PowerPoint 2010 or 2011 for Mac?</a></li>
             <li><a href="#support">Contact support</a></li>
-            <li><a href="#financial">Contribute with PayPal to get bonus features</a></li>
+            <li><a href="#financial">Contribute with PayPal to get premium features</a></li>
                         
         </ul>
         <h3><a id="getit">How to get Web Video Player</a></h3>
@@ -68,147 +62,63 @@
                     <li>
                         In PowerPoint, click Insert > Store.
                     </li>
-                    <img src="../images/insertstore.png">web video 
-                    <li>Type "Web Video Player" in the search box</li>
-                    <img src="../images/gettingstarted2.png">
+                    <img src="../images/storebutton.png">
                     <li>
-                        A prompt will appear asking you to select any cell.
-                        Choose a cell in the Excel workbook where you want the live updating price to appear.
+                        Type "Web Video Player" in the search box.
                     </li>
-                    <img src="../images/gettingstarted3.png">
+                    <img src="../images/searchstore.png">
                     <li>
-                        The add-in writes the price in the selected cell and also gives more information in the task pane,
-                        including the ticker, the last trade price, the percent change since the previous close,
-                        and the time of the last reported trade.
-                        This information is displayed for the time zone of the stock's exchange and is delayed by 15 minutes.
-                    </li>
-                    <img src="../images/gettingstarted4.png">
-		    <li><a id="connectChange"</a>
-                        That's it!
-                        To insert the daily change % into the spreadsheet as well,
-                        select the change value for that stock in the task pane.
-                        Then the add-in will prompt for a location in the same way that it did to add the stock initially.
-                    </li>
-                    <img src="../images/gettingstarted5.png">
-                        <li>
-                        Clear the contents of a cell to unlink it from the add-in.
+                        Click Add.
                     </li>
                 </ol>
             </p>
-        <h3><a id="international">Connect to International Stocks</a></h3>
+        <h3><a id="insertvideo">How to insert a video if you already installed it from the Store (steps above)</a></h3>
             <p>
-                If you invest on exchanges outside the United States, the tickers you use for your stocks may not be recognized by Yahoo's Finance API.
-                To find the correct international ticker, search with the <a href="http://finance.yahoo.com/lookup">Quote Lookup feature on Yahoo Finance</a>.
+                On the Insert menu, the Add-ins button has a dropdown arrow to the right.
+                If you've inserted one before, it will appear as an option on the dropdown.
+                <img src="../images/storebutton.png">
             </p>
+        <h3><a id="urls">What kind of URL do I need to enter?</a></h3>
             <p>
-                For example, Canadians may own the iShares Core S&P 500 ETF on the Toronto Stock Exchange, with the ticker <b>XUS</b>.
-                Searching on Yahoo Finance shows the international ticker <b>XUS.TO</b>, which is supported by the Stock Connector add-in.
-            </p>
-            <p>
-                I don't know the complete list of supported markets and exchanges, but I've had customers ask about accessing the following international ones:
-                
+                The easiest way to enter a video URL is simply to copy it from the address bar at <a href="www.youtube.com">YouTube</a> or <a href="www.vimeo.com/categories">Vimeo</a>.
+                Here are examples of different URLs that are all supported and embed the same YouTube video:
                 <ul>
-                    <li><b>Toronto Stock Exchange (TSX)</b>: These stocks are references with the suffix "<b>.TO</b>". For example, BB.TO (BlackBerry Ltd.)</li>
-                    <li><b>National Stock Exchange of India (NSE)</b>: Reference with the suffix "<b>.NS</b>". For example, INFY.NS (Infosys Ltd.). Note: For some reason, Yahoo appears to be blocking NSE quotes for customers within India itself.</li>
+                    <li><b>https://www.youtube.com/watch?v=dQw4w9WgXcQ</b>: This is a YouTube video URL copied from the address bar in your browser.</li>
+                    <li><b>https://youtu.be/dQw4w9WgXcQ</b>: This is a YouTube Sharing URL copied from YouTube's Share feature.</li>
+                    <li><b>https://www.youtube.com/embed/dQw4w9WgXcQ</b>: This is a YouTube embed code URL copied from YouTube's embed feature.</li>
+                    <li><b>https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDQMdjpOzKFbGt8</b>: This is a YouTube video URL from a playlist copied from the address bar in your browser. In Web Video Player the playlist won't play - only the single video.</li>
                 </ul>
-            </p>
-        <h3><a id="currency">Connect to FOREX Currency Exchange Rates</a></h3>
-            <p>
-                If you hold cash or securities outside in multiple countries, it's likely you'll want to convert between currencies at the up-to-date rates.
-                With the Stock Connector add-in, currencies are treated exactly like stocks.
-                Just enter the currency exchange ticker and choose a cell to connect to the rate.
+                If you encounter some other YouTube URL format that doesn't work but you think Web Video Player should understand it, <a href="mailto:webvideoplayer@outlook.com">send me an email</a> and I'll try to add support for it.
             </p>
             <p>
-                To find the correct currency exchange ticker, first find the 3-letter currency code for the two currencies you want to convert between.
-                For example, use USD for the American dollar and GBP for the British pound.
-                Then decide which of the two currencies you want to convert <i>to</i>, and place that one last.
-                For example, to convert British pounds (GBP) to American dollars (USD), use the ticker <b>GBPUSD</b>.
-                To convert American dollars (USD) to Euros (EUR), use the ticker <b>USDEUR</b>.
+                <b>Private</b> YouTube videos cannot be embedded. <b>Unlisted</b> ones can though.
+                You can change the video privacy status for your own YouTube video in your Video Manager on YouTube.
             </p>
             <p>
-                Because currency markets do not operate on a regular daily schedule, it's only possible to get the current exchange rate, not the difference compared to the previous day.
+                For Vimeo you must simply enter the URL from the address bar in your browser.
+                It looks like this: <b>https://vimeo.com/22542169</b>
             </p>
-        <h3><a id="indexes">Connect to market indexes</a></h3>
+        <h3><a id="delete">How do I delete a video?</a></h3>
             <p>
-                It's important to track how the broader markets are doing, to compare with your portfolio.
-                Market indexes like the S&P 500 are a great way to do that.
-                With the Stock Connector add-in, indexes are treated exactly like stocks.
-                Just enter the index ticker and choose a cell to connect to the rate.
+                To delete a video, first select it. Then press the delete button on your keyboard.
             </p>
             <p>
-                Index tickers on Yahoo's service usually begin with the caret character <b>^</b>.
-                To find an index ticker, search with the <a href="http://finance.yahoo.com/lookup">Quote Lookup feature on Yahoo Finance</a>.
-                Here are some common index tickers:
-                <ul>
-                    <li>S&P 500 Index (United States): <b>^GSPC</b></li>
-                    <li>FTSE 100 Index (London Stock Exchange): <b>^FTSE</b></li>
-                    <li>Nikkei 225 Index (Tokyo Stock Exchange): <b>^N225</b></li>
-                </ul>
+                The easiest way to select it is to click the edge of the video (left, right, top, or bottom).
+                If you do it right, you should see eight small white "selection handles" appear at the corners and sides.
+            </p>
+        <h3><a id="replace">How do I switch or replace one video with another or edit the URL?</a></h3>
+            <p>
+                Delete the video (<a href="#delete">how to delete quickly</a>), then insert another one (<a href="#insertvideo">how to insert quickly</a>).
+            </p>
+        <h3><a id="2010">Can I use Web Video Player with PowerPoint 2010 or 2011 for Mac?</a></h3>
+            <p>
+                PowerPoint 2010 and 2011 for Mac do not support Web Video Player or any other web-based add-ins.
+                If you're using Web Video Player with a presentation and then open that presentation in PowerPoint 2010 or 2011, you will still be able to use all the normal PowerPoint features, but the video will appear as a static image.
+                Once you reopen the presentation in a supported (more-recent) version of PowerPoint, the video will play properly again.
             </p>
             <p>
-                Unfortunately, Yahoo's Finance API blocks the Dow Jones Industrial Average, which is one of the most commonly-cited American indexes.
-                The best alternative to track that one is DIA, which is a popular ETF that tracks the Dow Jones with 99.9% accuracy.
-            </p>
-        
-        <h3><a id="onetomany">Connect a stock to more than one cell</a></h3>
-            <p>
-                Often you'll want a quote to appear in multiple places on a spreadsheet.
-                Since the Stock Connector add-in only lets you insert each quote in one place, you can use the power of Excel to show it in more places.
-                Let's say you want a price to appear in cell A1 and B1.
-                First connect the price to cell A! as usual.
-                Then type in <b>=A1</b> in cell B1. Now both cells will be updated automatically as the price changes.
-                If you want to get fancy, you could even create a separate sheet specifically to hold connected stocks, and use a forumla like <a href="https://support.office.microsoft.com/en-us/article/VLOOKUP-function-e2fba01b-188c-4057-87e2-df6bb4075817?CorrelationId=3a89ef3d-ff30-4cf6-a92d-4db3a10ba1a3&ui=en-US&rs=en-US&ad=US">VLOOKUP</a> to automatically get quotes for any stock on the main sheets.
-            </p>
-        
-        <h3><a id="find">Find a cell you already connected a stock to</a></h3>
-            <p>
-                If you manage a lot of stocks in the same spreadsheet, you might forget which cell you've connected for a particular stock.
-                The solution is simple: just click the price in the task pane and the cell you're looking for will be selected.
-            </p>
-            
-        <h3><a id="changeinterval">Change the refresh interval</a></h3>
-            <p>
-                By default, quotes are updated automatically every 15 seconds.
-                You can change the update frequency by clicking the two small arrows to increase or decrease the amount of time between updates.
-                The minimum interval for automatic refreshing is 5 seconds in Excel 2013 and Excel for iPad, 30 seconds in Excel Online.
-                <br><img src="../images/refreshinterval.png">
-            </p>
-        
-        <h3><a id="refreshnow">Refresh immediately</a></h3>
-            <p>
-                At any time you can refresh all your stocks immediately by clicking the word "Refresh".
-            </p>
-        
-        <h3><a id="stoprefresh">Turn off automatic refreshing</a></h3>
-            <p>
-                You can prevent stock prices from updating automatically by clicking the upward-pointing small arrow until the add-in displays a &#8734 symbol.
-                Then click Refresh whenever you want to update manually.
-            </p>
-        <h3><a id="2010">Using the Stock Connector add-in with Excel 2010</a></h3>
-            <p>
-                Excel 2010 does not support Stock Connector or any other web-based add-ins.
-                If you're using Stock Connector with a workbook and then open that workbook in Excel 2010, you will still be able to use all the normal Excel features, but the stock prices will not update. Once you reopen the workbook in a supported (more-recent) version of Excel, the stock prices will start updating properly again.
-            </p>
-        <h3><a id="clean">Clean a workbook to get out of a bad or corrupted state with Stock Connector</a></h3>
-            <p>
-                In rare cases you might find that Stock Connector seems to be "corrupted". 
-                For example, it might prevent you from adding valid stocks or loading any prices for your existing stocks. 
-                The exact causes of this bug are unknown, but events like the removal of a stock from an exchange (eg. acquisition) could be one cause.
-            </p>
-            <p>
-                An effective way to fix these problems is to clean the workbook with the Document Inspector. 
-                This action will not affect the data in the cells (including tickers, prices, and other info). 
-                But it will remove all other traces of Stock Connector from the workbook (specifically, the task pane and the live "links" to your cells). 
-                So in order to reconnect the workbook afterwards, you'll need to manually connect all the tickers with their cells using the task pane. 
-                Workbook-cleaning is only available on the Windows versions of Excel. Here are the steps:                
-                <ol>
-                    <li>Make a copy of the document as a backup (recommended)</li>
-                    <li>File > Info > Check for Issues > Inspect Document
-                        <br><img src="../images/inspectdocument.png">
-                    <li>Select only <b>Task Pane Add-ins</b> and choose <b>Inspect</b></li>
-                    <li>Remove All</li>
-                    <li>Once you're done, you can insert Stock Connector again and start reconnecting prices.</li>
-                </ol>
+                If you don't want to pay for an updated version of PowerPoint, you can use <a href="https://office.live.com/start/PowerPoint.aspx">PowerPoint Online with OneDrive</a> for free on Mac or PC.
+                And it supports Web Video Player.
             </p>
     <h2><a id="support">Support and feedback</a></h2>
         <p>
@@ -218,63 +128,42 @@
     <h2><a id="privacy">Privacy</a></h2>
         <p>
             The add-in <i>never</i> collects, stores, or transmits information that can be used to identify you, except for PayPal data: 
-            If you use PayPal to contribute, then PayPal provides Stock Connector with the email address and name from your PayPal account.
+            If you use PayPal to contribute, then PayPal provides Web Video Player with the email address and name from your PayPal account.
         </p>
         <p>
-            The add-in <i>does</i> collect anonymous information about how the add-in is used, such as how often it's launched and which buttons get clicked.
-            These logs are collected through the Google Analytics web service.
-            To distinguish users from each other, the add-in generates a random number for each user, which is stored on your computer and can be removed by clearing your cookies.
-            The information collected is used only to improve the quality of the add-in and is not sent or sold to any third party.
+            Google is used to track traffic, so they do collect metadata such as how many people use the add-in and how often, but not any personally-identifiable information.
+        </p>
+    <h2><a id="financial">Contributing with PayPal and getting premium features</a></h2>
+        <p>
+            Web Video Player is provided with basic video insertion and playing for free.
+            It's funded via $5 voluntary contributions, which can be made through PayPal from the Mac or Windows versions of Office. 
+            You must sign in to Office in the top right corner with a work, school, or personal account before purchasing.
         </p>
         <p>
-            The data provider is Yahoo Finance.
-            In order to retrieve the stock quotes, the add-in sends Yahoo the list of stock tickers for each refresh.
+            Once a user contributes, the add-in stores their Office account identifier in a database. 
+            From then on, those users get access to premium features. 
+            Those users also get a promise to never see adds in Web Video Player, now and in the future. 
+            These premium features work no matter what computer, document, or operating system you use for Web Video Player. 
+            The number of files enabled for the $5 contribution is <i>unlimited</i>. 
+            The only requirement is that you sign in to Office.
         </p>
-        
-    <h2><a id="financial">Contributing with PayPal and getting bonus features</a></h2>
         <p>
-            Stock Connector is provided with all its essential features for free.
-			I fund Stock Connector via $5 voluntary contributions, which can be made through PayPal from the Stock Connector task pane (or directly via this <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SCEEWK4TMNKKE">PayPal link</a>). 
-            I do the development work including bug-fixes myself in my free time, around 4 hours per week.
-			<br><img src="../images/pro.png" title="prompt to contribute via PayPal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SCEEWK4TMNKKE">
+            Here is the current list of premium features. All of these are awarded to users who contribute:
+            <ul>
+                <li>
+                    <b>Autoplay</b> lets you configure the video to start playing when the add-in loads, without needing to click the Play button.
+                    If you select this option, the video will automatically start playing when you go to the slide with the video (and, as usual, stop automatically when you leave the slide).
+                </li>
+                <li>
+                    <b>Custom Start Time</b> lets you configure the video to start at a specific time, other than 0:00.
+                    If you select this option, the video will reset to the custom start time every time you leave and return to the slide.
+                </li>
+                <li><b>Custom End Time</b> lets you configure the video to end at a specific time (only supported for YouTube videos)</li>
+            </ul>
+            All of these features work after the video is inserted, even if another user who did not make a contribution is opening the file.
         </p>
-		<p>
-			Once a user contributes, the add-in stores their Office account identifier in a database.
-			From then on, those users get access to bonus features.
-			Those users also get a promise to never see adds in Stock Connector, now and in the future.
-			These bonus features work no matter what computer, document, or operating system you use for Stock Connector.
-			The only requirement is that you sign in to Office.
-		</p>
-		<p>
-			Here is the current list of bonus features. All of these are awarded to users who contribute:
-			<ul>
-				<li>The prompt to contribute via PayPal goes away, of course. If you'd like to contribute again in the future, you can do so <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SCEEWK4TMNKKE">directly</a>.</li>
-				<li>
-					Reordering of the stocks and securities list in the task pane. Hovering over the name of the stock changes the cursor to a cross shape.
-					You can then hold down the mouse and drag it (or drag your finger) to bring the stock to its desired location in the list, which will be saved automatically for future sessions.
-					<br><img src="../images/clickanddrag.png" title="click and drag to reposition stocks in the list">
-				</li>
-			</ul>
-			I will continue to add a combination of some features for everyone and some features for contributors only.
-		</p>
-		<p>
-            Here's how to contribute and get the bonus features: 
-			<ol>
-				<li>Sign in to Excel on a PC or Mac (if you're an iPad user, the bonus features will still work on your computer, but only if you contribute from a Windows or OSX computer first).<br><img src="../images/signin.png" title="sign in to Office to use the bonus features"></li>
-				<li>Make sure you have at least 3 stocks in your list to trigger the contribution prompt.</li>
-				<li>Click the PayPal button and follow the instructions in the new window to contribute.</li>
-				<li>10-15 seconds after the payment is completed, the ad should disappear and the bonus features should be activated.</li>
-			</ol>			
-        </p>
-		<p>
-			I will continue to maintain and improve Stock Connector as long as the Yahoo Finance service remains viable.
-			Yahoo's recent corporate sale may impact the service in the future if they decide to shut it down.
-			I have no reason to believe that will happen, but it's important to disclose that possibility.
-		</p>
         <p>
-            As always, you can of course use the add-in completely free. And I promise to <i>never</i> make you pay for access to features you're already using.            
+            As always, you can of course use Web Video Player completely free. And I promise to <i>never</i> make you pay for access to features you're already using.            
         </p>
-		
-
 </body>
 </html>
