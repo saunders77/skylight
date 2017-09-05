@@ -101,8 +101,8 @@ function loadLicenseInfo(){
 	}
 	
 	// these literal assignments are for testing
-	liveId = "1EF5C754CE1B2ADf";
-	userId = liveId;
+	//liveId = "1EF5C754CE1B2ADf";
+	//userId = liveId;
 
 	write("user ID is " + userId);
 
@@ -116,6 +116,18 @@ function errorMessage(myText){
 }
 
 function createVideo(){
+	function rememberSuccess(){
+		if (typeof(Storage) !== "undefined") {
+			if(!localStorage.getItem("lastUseDay")){
+				var d = new Date();
+				localStorage.setItem("lastUseDay", d.toDateString());
+				localStorage.setItem("usedDays", 1);
+			}
+		} else {
+			write("Sorry, your browser does not support Web Storage...");
+		}
+	}	
+
 	var urlString;
 	urlString = Office.context.document.settings.get("vid");
 	var myAutoplay = 0;
@@ -180,6 +192,7 @@ function createVideo(){
     if(urlString.indexOf("youtube.com") != -1 || urlString.indexOf("youtu.be") != -1)
     {
           ga('send','event','videoplayer','setvideo','youtube');
+		  rememberSuccess();
 		  write("there's a video to create");
 		  Office.context.document.settings.set("vid",urlString);
 		  Office.context.document.settings.set("autoplay", myAutoplay);
@@ -214,6 +227,7 @@ function createVideo(){
     }
     else if(urlString.indexOf("vimeo.com") != -1){
           ga('send','event','videoplayer','setvideo','vimeo');
+		  rememberSuccess();
 		  Office.context.document.settings.set("vid",urlString);
 		  Office.context.document.settings.set("autoplay", myAutoplay);
 		  Office.context.document.settings.set("starttime", myStartTime);
@@ -364,6 +378,20 @@ Office.initialize = function (reason) {
         	$('#waitingPay').hide();
 			pingingForPayment = false;
         });
+
+		//help buttons
+		$('#contactlink').click(function(){
+        	window.open("mailto:webvideoplayer@outlook.com");
+        });
+		$('#helplink').click(function(){
+        	window.open("https://www.michael-saunders.com/videoplayer/pages/info.html#howto");
+        });
+		$('#privacylink').click(function(){
+        	window.open("https://www.michael-saunders.com/videoplayer/pages/privacy.html");
+        });
+		$('#ratelink').click(function(){
+        	window.open("https://store.office.com/writereview.aspx?assetid=WA104221182");
+        });
         
 		function pingForPro(){
 			checkServerDatabase(function(myStatus){
@@ -391,6 +419,28 @@ Office.initialize = function (reason) {
 
 		function showAd(){
 			$('#proPrompt').fadeIn();
+		}
+
+		// add log to localStorage
+		if (typeof(Storage) !== "undefined") {
+			if(localStorage.getItem("lastUseDay")){
+				var d = new Date();
+				write("my used days=" + localStorage.getItem("usedDays"));
+				write("datestring=" + d.toDateString());
+				if(localStorage.getItem("lastUseDay") != d.toDateString()){
+					// then we can log a new unique day
+					localStorage.setItem("lastUseDay", d.toDateString());
+					var myUsedDays = localStorage.getItem("usedDays");
+					myUsedDays++;
+					localStorage.setItem("usedDays", myUsedDays);
+					if(myUsedDays > 1){
+						write("show rating link");
+						$("#ratelink").css("visibility", "visible");
+					}
+				}
+			}
+		} else {
+			write("Sorry, your browser does not support Web Storage...");
 		}
 
         if(Office.context.document.settings.get("vid")){

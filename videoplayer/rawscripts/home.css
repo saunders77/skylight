@@ -76,13 +76,22 @@ i{
 }
 
 #links{
-	position:absolute;
-	right:5px;
-	bottom:70px;
-	background-color:yellow;
+	position: absolute;
+	right: 10px;
+	top:177px;
+	width:100px;
+	height: 100px;
 	font-size: 12px;
-	text-align: right;
-	
+	text-align: left;
+	z-index: 10;
+}
+
+#ratelink{
+	visibility:hidden;
+}
+
+.linkstyle{
+	cursor:pointer;
 }
 
 #prompt{
