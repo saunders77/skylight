@@ -15,16 +15,43 @@ var vautoplay = Office.context.document.settings.get("autoplay");
 var vstarttime = Office.context.document.settings.get("starttime");
 var vendtime = Office.context.document.settings.get("endtime");
 var vindex;
+var vid; // video ID code
+
+function getParameterByName(name, url) {
+    // from Stack Overflow 
+    // if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 if(vurl.indexOf("watch?v=") != -1){
+  // example: https://www.youtube.com/watch?v=dQw4w9WgXcQ
   vindex = vurl.indexOf("watch?v=");
 }
 else if(vurl.indexOf("m/embed/") != -1){
+  // example: https://www.youtube.com/embed/dQw4w9WgXcQ
   vindex = vurl.indexOf("m/embed/");
 }
-else{
-  vindex = vurl.indexOf("outu.be/");
+else if(vurl.indexOf("e.com/v/") != -1){
+  // example: https://www.youtube.com/v/dQw4w9WgXcQ
+  vindex = vurl.indexOf("e.com/v/");
 }
-var vid = vurl.substring(vindex+8);
+else{
+  // example: https://youtu.be/dQw4w9WgXcQ
+  vindex = vurl.indexOf("outu.be/"); 
+}
+
+vid = vurl.substring(vindex+8); // the stuff after the found substring
+
+// now the proper way to get the vid ID
+if(getParameterByName("v",vurl)){
+  // example: https://www.youtube.com/watch?time_continue=5&v=dQw4w9WgXcQ or https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=dQw4w9WgXcQ
+  vid = getParameterByName("v",vurl);
+}
 
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
