@@ -94,6 +94,11 @@ i{
 	cursor:pointer;
 }
 
+#signinlink{
+	color:#bee5fa;
+}
+
+
 #prompt{
 	padding-top:20px;
 	padding-bottom:0px;
@@ -158,6 +163,23 @@ i{
 	height:29px;
 	border:0;
 	padding:0;
+}
+
+.registerBox{
+	height:27px;
+	width:150px;
+	border:1px;
+	border-style:solid;
+	font-family:Segoe UI, Helvetica, sans-serif;
+	font-size:14px;
+	text-align:left;
+	padding:0;
+	cursor:text;
+	padding-left:4px;
+	-moz-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box
 }
 
 .videoID{
@@ -318,8 +340,16 @@ textarea.setVid{text-align:center}
 	
 }
 
+.registering{
+	display:none;
+}
+
 #proContent{
 	width:295px;
+}
+
+#signInText{
+	width:80%;
 }
 
 #buyNow{
@@ -327,6 +357,12 @@ textarea.setVid{text-align:center}
 	left:345px;
 	right:0px;
 	bottom:1px;
+}
+
+#registerFields{
+	position:absolute;
+	bottom:4px;
+	height:32px;
 }
 
 .payButton{

@@ -368,11 +368,23 @@ Office.initialize = function (reason) {
 			document.getElementById("customendtime").checked = true;
 		};
 		$('.payButton').click(function(){
-			window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
-			pingingForPayment = true;
-			$('#waitingPay').show();
-			setTimeout(pingForPro,10000);
-			ga("send","event","videoplayer","checkping");
+			if(userId){
+				// then we can just go to PayPal
+				window.open("../pages/purchasewindow.html?custom=" + encodeURIComponent(userId));
+				pingingForPayment = true;
+				$('#waitingPay').show();
+				setTimeout(pingForPro,10000);
+				ga("send","event","videoplayer","checkping");
+			}
+			else{
+				// then they need to log in first
+				$('#proContent').fadeOut(200);
+				$('#buyNow').fadeOut(200);
+				setTimeout(function(){
+					$('#registering').fadeIn(200);
+				},250);
+			}
+			
 		});
 		$('#cancelPay').click(function(){
         	$('#waitingPay').hide();
