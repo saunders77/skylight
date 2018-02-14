@@ -435,7 +435,9 @@ Office.initialize = function (reason) {
 					localStorage.setItem("usedDays", myUsedDays);
 					if(myUsedDays > 1){
 						write("show rating link");
-						$("#ratelink").css("visibility", "visible");
+
+						// disabling for now while ratings don't work
+						//$("#ratelink").css("visibility", "visible");
 					}
 				}
 			}
@@ -533,7 +535,7 @@ Office.initialize = function (reason) {
 					turnOnPro();
 				}
 				else{
-					if(userId && Office.context.commerceAllowed){
+					if(Office.context.commerceAllowed){
 						showAd();
 					}
 					else{
