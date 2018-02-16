@@ -381,7 +381,16 @@ Office.initialize = function (reason) {
 				$('#proContent').fadeOut(200);
 				$('#buyNow').fadeOut(200);
 				setTimeout(function(){
-					$('#registering').fadeIn(200);
+					gapi.signin2.render('my-signin2', {
+						'scope': 'profile email',
+						'width': 240,
+						'height': 50,
+						'longtitle': true,
+						'theme': 'dark',
+						'onsuccess': onSuccess,
+						'onfailure': onFailure
+					});
+					$('#g-signin2').fadeIn(200);
 				},250);
 			}
 			
