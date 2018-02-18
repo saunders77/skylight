@@ -10,6 +10,7 @@ function write(myText){
     document.getElementById("debug").innerHTML = document.getElementById("debug").innerHTML + "\n" + myText;
 }
 
+
 // from stackoverflow
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -297,8 +298,29 @@ function saveVid(){
 }
 
 Office.initialize = function (reason) {
-    $(document).ready(function(){
+    write("initialized");
+	
+	$(document).ready(function(){
 		
+		gapi.load('auth2', function() { 
+			write("gload");
+			gapi.auth2.init({
+				client_id: '401471067171-hvdnt8b1u07bfma48a20da4o4h94fio2.apps.googleusercontent.com'
+			}).then(function(){
+				write("ginit"); 
+				var myGauth = gapi.auth2.getAuthInstance();
+				write(myGauth.isSignedIn.get());
+				myGauth.signIn().then(function(){
+					write("sign in succeeded");
+				},function(){
+					write("sign in failed");
+				});
+			},function(){
+				write("gerror");
+			}); //onerror
+		});
+		
+
 		if(true){//window.top==window){
             //not in iframe
             /*
@@ -391,6 +413,7 @@ Office.initialize = function (reason) {
 						'onfailure': onFailure
 					});
 					$('#g-signin2').fadeIn(200);
+					
 				},250);
 			}
 			
