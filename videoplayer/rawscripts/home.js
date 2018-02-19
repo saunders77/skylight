@@ -72,6 +72,8 @@ var userId; // can become either the orgId or the liveId
 var acqusitionDate;
 var isPro = false;
 
+var readyToRegister = false;
+
 var pingingForPayment = false;
 
 function loadLicenseInfo(){
@@ -298,28 +300,8 @@ function saveVid(){
 }
 
 Office.initialize = function (reason) {
-    write("initialized");
-	
-	$(document).ready(function(){
-		
-		gapi.load('auth2', function() { 
-			write("gload");
-			gapi.auth2.init({
-				client_id: '401471067171-hvdnt8b1u07bfma48a20da4o4h94fio2.apps.googleusercontent.com'
-			}).then(function(){
-				write("ginit"); 
-				var myGauth = gapi.auth2.getAuthInstance();
-				write(myGauth.isSignedIn.get());
-				myGauth.signIn().then(function(){
-					write("sign in succeeded");
-				},function(){
-					write("sign in failed");
-				});
-			},function(){
-				write("gerror");
-			}); //onerror
-		});
-		
+
+	$(document).ready(function(){		
 
 		if(true){//window.top==window){
             //not in iframe
@@ -400,20 +382,75 @@ Office.initialize = function (reason) {
 			}
 			else{
 				// then they need to log in first
+				$.getScript("https://michael-saunders.com/videoplayer/scripts/sha256.js",function(response,status){});
+
 				$('#proContent').fadeOut(200);
 				$('#buyNow').fadeOut(200);
+				// set UI for registration				
+				
 				setTimeout(function(){
-					gapi.signin2.render('my-signin2', {
-						'scope': 'profile email',
-						'width': 240,
-						'height': 50,
-						'longtitle': true,
-						'theme': 'dark',
-						'onsuccess': onSuccess,
-						'onfailure': onFailure
-					});
-					$('#g-signin2').fadeIn(200);
+					$('#signInText').html("Register a new account with Web Video Player for premium features.");
+					$('#registerSignInText').html("Register");
+
+					$('.registering').fadeIn(200);
 					
+					$('#email').focus(function(){
+						if($('#email').val() == "email"){
+							$('#email').attr({
+								"value": "",
+							});
+						}
+					});
+				
+					$('#password').focus(function(){
+						if($('#password').val() == "password"){
+							$('#password').attr({
+								"value": "",
+							});
+							// this part is to replace the password field
+							var oldInput = document.getElementById("password");
+							var newInput= oldInput.cloneNode(false);
+							newInput.type='password';
+							oldInput.parentNode.replaceChild(newInput,oldInput);
+							$('#password').focus();
+							function checkPassReady(){
+								var emailString = $('#email').val();
+								if($('#password').val().length > 3 && emailString.length > 3 && emailString.indexOf('@') > -1 && emailString.indexOf('.') > -1){
+									$("#registerSignIn").css("background-color","#bbe2fa");
+									readyToRegister = true;
+								}
+								else{
+									$("#registerSignIn").css("background-color","#c8c8c8");
+									readyToRegister = false;	
+								}
+							}
+							$('.registerBox').keyup(function(){
+								checkPassReady();
+							});
+
+							$('#registerSignIn').click(function(){
+								if(readyToRegister){
+									var pass = sha256("wvp" + $('#password').val());
+									write("pass=" + pass);
+									userId = $('#email').val();
+
+									// check whether the user is registered
+									checkServerDatabase(function(myStatus){
+										if(myStatus == 200){
+											write("found the id");
+											turnOnPro();
+										}
+										else{
+											// trigger paypal flow
+											write("failed to find entry");
+										}
+									}, pass);
+								}
+							});
+
+						}
+					});
+
 				},250);
 			}
 			
@@ -435,6 +472,19 @@ Office.initialize = function (reason) {
         });
 		$('#ratelink').click(function(){
         	window.open("https://store.office.com/writereview.aspx?assetid=WA104221182");
+        });
+		$('#signinlink').click(function(){
+        	$.getScript("https://michael-saunders.com/videoplayer/scripts/sha256.js",function(response,status){});
+			$('#proContent').fadeOut(200);
+			$('#buyNow').fadeOut(200);
+			$('.registering').fadeOut(200);
+			setTimeout(function(){
+				$('#signInText').html("Sign in to Web Video Player to access your premium features.");
+				$('#registerSignInText').html("Sign in");
+				$('#email').html("email");
+				$('.registering').fadeIn(200);
+			},250);
+			
         });
         
 		function pingForPro(){
@@ -561,44 +611,67 @@ Office.initialize = function (reason) {
 			
 			loadLicenseInfo();
 			
-			function checkServerDatabase(callback){
+			function checkServerDatabase(callback, password){
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
 						callback(this.status);
 					}
 				};
-				xhttp.open("POST", "https://michael-saunders.com/server/checkdatabase.php", true);
-				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send("custom=" + userId);
-			}
-			
-			checkServerDatabase(function(myStatus){
-				if(myStatus == 200){
-					write("result succeeded");
-					turnOnPro();
+				var phpUrl = "https://michael-saunders.com/server/";
+				var paramsString = "custom=" + userId;
+				if(password){
+					// then it's a WVP-authenticated check
+					phpUrl += "checkdatabasepw.php";
+					paramsString += "&pass=" + password;
 				}
 				else{
-					if(Office.context.commerceAllowed){
-						showAd();
+					phpUrl += "checkdatabase.php";
+					write("correct entrypoint");
+				}
+				xhttp.open("POST", phpUrl, true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send(paramsString);
+			}
+			
+			if(userId){
+				checkServerDatabase(function(myStatus){
+					if(myStatus == 200){
+						write("result succeeded");
+						turnOnPro();
 					}
 					else{
-						// hide additional features options for iPad
-						if(!Office.context.commerceAllowed){
-							$('#premiumFeatures').hide();
-							$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+						if(Office.context.commerceAllowed){
+							showAd();
 						}
 						else{
-							// there's no user ID
-							document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
-							$('#premiumFeatures').hide();
+							// hide additional features options for iPad
+							if(!Office.context.commerceAllowed){
+								$('#premiumFeatures').hide();
+								$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+							}
+							else{
+								// there's no user ID
+								// this should no longer happen
+								document.getElementById('premiumFeatures').title += '. Sign in before purchase.';
+								$('#premiumFeatures').hide();
+							}
+							
 						}
 						
+						write("result status: " + myStatus)
 					}
-					
-					write("result status: " + myStatus)
-				}
-			});
+				});
+			}
+			else if(Office.context.commerceAllowed){
+				showAd();
+				document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
+			}
+			else{
+				$('#premiumFeatures').hide();
+				$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+			}
+			
 
             document.getElementById("cloak").style.visibility = 'hidden';
             
