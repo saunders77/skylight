@@ -78,7 +78,7 @@ i{
 #links{
 	position: absolute;
 	right: 10px;
-	top:173px;
+	top:170px;
 	width:100px;
 	height: 100px;
 	font-size: 12px;
@@ -423,7 +423,7 @@ textarea.setVid{text-align:center}
 }
 
 #debug{
-
+	display:none;
 	position:fixed;
 	height:80%;
 	width:60%;

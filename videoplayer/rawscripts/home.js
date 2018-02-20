@@ -73,6 +73,8 @@ var acqusitionDate;
 var isPro = false;
 
 var readyToRegister = false;
+var signedIn = false;
+var pass;
 
 var pingingForPayment = false;
 
@@ -394,67 +396,93 @@ Office.initialize = function (reason) {
 
 					$('.registering').fadeIn(200);
 					
-					$('#email').focus(function(){
-						if($('#email').val() == "email"){
-							$('#email').attr({
-								"value": "",
-							});
-						}
-					});
-				
-					$('#password').focus(function(){
-						if($('#password').val() == "password"){
-							$('#password').attr({
-								"value": "",
-							});
-							// this part is to replace the password field
-							var oldInput = document.getElementById("password");
-							var newInput= oldInput.cloneNode(false);
-							newInput.type='password';
-							oldInput.parentNode.replaceChild(newInput,oldInput);
-							$('#password').focus();
-							function checkPassReady(){
-								var emailString = $('#email').val();
-								if($('#password').val().length > 3 && emailString.length > 3 && emailString.indexOf('@') > -1 && emailString.indexOf('.') > -1){
-									$("#registerSignIn").css("background-color","#bbe2fa");
-									readyToRegister = true;
-								}
-								else{
-									$("#registerSignIn").css("background-color","#c8c8c8");
-									readyToRegister = false;	
-								}
-							}
-							$('.registerBox').keyup(function(){
-								checkPassReady();
-							});
-
-							$('#registerSignIn').click(function(){
-								if(readyToRegister){
-									var pass = sha256("wvp" + $('#password').val());
-									write("pass=" + pass);
-									userId = $('#email').val();
-
-									// check whether the user is registered
-									checkServerDatabase(function(myStatus){
-										if(myStatus == 200){
-											write("found the id");
-											turnOnPro();
-										}
-										else{
-											// trigger paypal flow
-											write("failed to find entry");
-										}
-									}, pass);
-								}
-							});
-
-						}
-					});
+					
 
 				},250);
 			}
 			
 		});
+
+		$('#email').focus(function(){
+			if($('#email').val() == "email"){
+				$('#email').attr({
+					"value": "",
+				});
+			}
+		});
+
+		$('#password').focus(function(){
+			if($('#password').val() == "password"){
+				$('#password').attr({
+					"value": "",
+				});
+				// this part is to replace the password field
+				var oldInput = document.getElementById("password");
+				var newInput= oldInput.cloneNode(false);
+				newInput.type='password';
+				oldInput.parentNode.replaceChild(newInput,oldInput);
+				$('#password').focus();
+				var waitToCheck; // timeout
+				function checkPassReady(){
+					var emailString = $('#email').val();
+					if($('#password').val().length > 3 && emailString.length > 3 && emailString.indexOf('@') > -1 && emailString.indexOf('.') > -1){
+						waitToCheck = setTimeout(function(){
+							// check database
+							pass = sha256("wvp" + $('#password').val());
+							write("pass=" + pass);
+							userId = $('#email').val();
+							signedIn = true;
+							// check whether the user is registered
+							checkServerDatabase(function(myStatus){
+								if(myStatus == 200){
+									write("found the id");
+									$('#proPrompt').fadeOut();
+									turnOnPro();
+									$("#signinlink").fadeOut();
+									write("hiding sign in");											
+									// cache locally
+									localStorage.setItem("email", userId);
+								}
+								else{
+									write("not found");
+									$("#registerSignIn").css("background-color","#bbe2fa");
+									readyToRegister = true;
+								}
+							},pass);
+							
+						},500);
+					}
+					else{
+						$("#registerSignIn").css("background-color","#c8c8c8");
+						readyToRegister = false;	
+					}
+				}
+				$('.registerBox').keyup(function(){
+					readyToRegister = false;
+					$("#registerSignIn").css("background-color","#c8c8c8");
+					if(waitToCheck){
+						clearInterval(waitToCheck);
+					}
+					checkPassReady();
+				});
+
+				$('#registerSignIn').click(function(){
+					if(readyToRegister){								
+						// trigger paypal flow
+
+						window.open("../pages/purchasewindowpw.html?myUserId=" + encodeURIComponent(userId) + "&myPass=" + encodeURIComponent(pass));
+						pingingForPayment = true;
+						$('#waitingPay').show();
+						setTimeout(function(){
+							pingForPro(pass);
+						},10000);
+						ga("send","event","videoplayer","checkpingpw");				
+					}
+				});
+
+			}
+		});
+
 		$('#cancelPay').click(function(){
         	$('#waitingPay').hide();
 			pingingForPayment = false;
@@ -487,9 +515,12 @@ Office.initialize = function (reason) {
 			
         });
         
-		function pingForPro(){
+		function pingForPro(password){
 			checkServerDatabase(function(myStatus){
 				if(myStatus == 200){
+					if(signedIn){
+						localStorage.setItem("email", userId);
+					}
 					write("result succeeded");
 					ga("send","event","videoplayer","purchasesucceeded");
 					pingingForPayment = false;
@@ -498,11 +529,13 @@ Office.initialize = function (reason) {
 				}
 				else{
 					if(pingingForPayment){
-						setTimeout(pingForPro,2000);
+						setTimeout(function(){
+							pingForPro(password);
+						},2000);
 						ga("send","event","videoplayer","checkping");					
 					}
 				}
-			});
+			},password);
 		}
 
 		function turnOnPro(){
@@ -612,6 +645,7 @@ Office.initialize = function (reason) {
 			loadLicenseInfo();
 			
 			function checkServerDatabase(callback, password){
+				write("checking for pw" + password);
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4) {
@@ -663,7 +697,16 @@ Office.initialize = function (reason) {
 					}
 				});
 			}
+			else if(localStorage.getItem("email")){
+				turnOnPro();
+				userId = email;
+				signedIn = true;
+				$("#signinlink").fadeOut();
+				ga("send","event","videoplayer","autosignin",localStorage.getItem("email"));
+			}
 			else if(Office.context.commerceAllowed){
+				$("#price").html("$9.95");
+				write("adjust price");
 				showAd();
 				document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
 			}
