@@ -165,7 +165,7 @@ i{
 }
 
 .registerBox{
-	height:27px;
+	height:26px;
 	width:170px;
 	border:1px;
 	border-style:solid;
@@ -370,7 +370,9 @@ textarea.setVid{text-align:center}
 }
 
 #signInText{
+
 	width:80%;
+
 }
 
 #buyNow{
@@ -384,6 +386,7 @@ textarea.setVid{text-align:center}
 	position:absolute;
 	bottom:4px;
 	height:32px;
+	
 }
 
 .payButton{
@@ -395,6 +398,14 @@ textarea.setVid{text-align:center}
 	height:26px;
 	padding-top:10px;
 	padding-left:8px;
+}
+
+#paypalButton2{
+	width:158px;
+	height:26px;
+	padding:0px;
+	margin:0px;
+
 }
 
 #creditCards{

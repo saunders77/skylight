@@ -383,22 +383,7 @@ Office.initialize = function (reason) {
 				ga("send","event","videoplayer","checkping");
 			}
 			else{
-				// then they need to log in first
-				$.getScript("https://michael-saunders.com/videoplayer/scripts/sha256.js",function(response,status){});
-
-				$('#proContent').fadeOut(200);
-				$('#buyNow').fadeOut(200);
-				// set UI for registration				
 				
-				setTimeout(function(){
-					$('#signInText').html("Register a new account with Web Video Player for premium features.");
-					$('#registerSignInText').html("Register");
-
-					$('.registering').fadeIn(200);
-					
-					
-
-				},250);
 			}
 			
 		});
@@ -669,6 +654,7 @@ Office.initialize = function (reason) {
 			}
 			
 			if(userId){
+				$("#signinlink").hide();
 				checkServerDatabase(function(myStatus){
 					if(myStatus == 200){
 						write("result succeeded");
@@ -701,13 +687,32 @@ Office.initialize = function (reason) {
 				turnOnPro();
 				userId = email;
 				signedIn = true;
-				$("#signinlink").fadeOut();
+				$("#signinlink").hide();
 				ga("send","event","videoplayer","autosignin",localStorage.getItem("email"));
 			}
 			else if(Office.context.commerceAllowed){
 				$("#price").html("$9.95");
 				write("adjust price");
 				showAd();
+				// then they need to log in first
+				$.getScript("https://michael-saunders.com/videoplayer/scripts/sha256.js",function(response,status){});
+
+				$('#proContent').hide();
+				$('#buyNow').hide();
+				// set UI for registration				
+				
+				setTimeout(function(){
+					$('#signInText').html('Register and contribute <b><span id="price">$9.95</span></b> to unlock the <a href="javascript:;" class="linkstyle" id="registerHelp" style="color:#bbe2fa">premium features</a> for all your videos.');
+					$('#registerHelp').click(function(){
+						window.open("https://www.michael-saunders.com/videoplayer/pages/help.html");
+					});
+					$('#registerSignInText').html("Register");
+
+					$('.registering').fadeIn(200);
+					
+					
+
+				},250);
 				document.getElementById('premiumFeatures').title += '. Sign in to Office before purchase.';
 			}
 			else{
