@@ -661,25 +661,37 @@ Office.initialize = function (reason) {
 						turnOnPro();
 					}
 					else{
-						if(Office.context.commerceAllowed){
-							showAd();
-						}
-						else{
-							// hide additional features options for iPad
-							if(!Office.context.commerceAllowed){
-								$('#premiumFeatures').hide();
-								$('#helpLink').attr("href", "../pages/helpnocommerce.html");
-							}
-							else{
-								// there's no user ID
-								// this should no longer happen
-								document.getElementById('premiumFeatures').title += '. Sign in before purchase.';
-								$('#premiumFeatures').hide();
-							}
-							
-						}
-						
-						write("result status: " + myStatus)
+						// try again once after waiting
+						setTimeout(function(){
+							checkServerDatabase(function(myStatus2){
+								if(myStatus2 == 200){
+									write("result succeeded");
+									turnOnPro();
+								}
+								else{
+									// now we give up
+									if(Office.context.commerceAllowed){
+										showAd();
+									}
+									else{
+										// hide additional features options for iPad
+										if(!Office.context.commerceAllowed){
+											$('#premiumFeatures').hide();
+											$('#helpLink').attr("href", "../pages/helpnocommerce.html");
+										}
+										else{
+											// there's no user ID
+											// this should no longer happen
+											document.getElementById('premiumFeatures').title += '. Sign in before purchase.';
+											$('#premiumFeatures').hide();
+										}
+										
+									}
+									
+									write("result status: " + myStatus);
+								}								
+							});
+						},2000);
 					}
 				});
 			}
