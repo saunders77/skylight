@@ -631,26 +631,29 @@ Office.initialize = function (reason) {
 			
 			function checkServerDatabase(callback, password){
 				write("checking for pw" + password);
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4) {
-						callback(this.status);
-					}
-				};
+
 				var phpUrl = "https://michael-saunders.com/server/";
-				var paramsString = "custom=" + userId;
 				if(password){
 					// then it's a WVP-authenticated check
 					phpUrl += "checkdatabasepw.php";
-					paramsString += "&pass=" + password;
+					$.post(phpUrl, {custom: userId, pass: password}).done(function(response){
+						// response from PHP back-end 
+						if(response.includes("200")){ callback(200); }
+						else if(response.includes("404")){	callback(404);	}
+						else{callback(response);	}
+					}).fail(function(response){	callback(404);	});
 				}
 				else{
 					phpUrl += "checkdatabase.php";
 					write("correct entrypoint");
+					$.post(phpUrl, {custom: userId}).done(function(response){
+						// response from PHP back-end 
+						if(response.includes("200")){ callback(200); }
+						else if(response.includes("404")){	callback(404);	}
+						else{callback(response);	}
+					}).fail(function(response){	callback(404);	});
 				}
-				xhttp.open("POST", phpUrl, true);
-				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send(paramsString);
+				
 			}
 			
 			if(userId){
